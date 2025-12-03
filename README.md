@@ -9,3 +9,9 @@ Kao što je prikazano na slici 1, ICMP zaglavlje sastoji se od nekoliko osnovnih
 
 <img src="Docs/image.png" alt="ICMP format okvira" width="500">
 
+
+
+## Zaključak
+
+## Literatura
+[1] "Detection of Covert Channels over ICMP Protocol", Dostupno na: https://hal.science/hal-02381398/file/AICCSA%202017%20sirine%20sayadi.pdf
