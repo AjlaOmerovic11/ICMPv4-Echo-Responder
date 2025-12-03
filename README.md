@@ -9,13 +9,11 @@ Kao što je prikazano na slici 1, ICMP zaglavlje sastoji se od nekoliko osnovnih
 
 <img src="Docs/image.png" alt="ICMP format okvira" width="500">
 
-ICMPv4 koristi 8-bitni pointer u poruci Parameter Problem koji ukazuje na mjesto u IP zaglavlju gdje je otkriven problem. Kada se šalje ICMPv4 greška, paket uključuje onoliko originalnog IP zaglavlja i podataka koliko može stati.
-Kada ICMPv4 generiše grešku:
--U zaglavlje se ubacuje dio originalnog IP paketa koji je izazvao grešku.
--Ukoliko se takav paket naknadno obrađuje (npr. prevođenje ili enkapsulacija), može se promijeniti ukupna dužina IP datagrama, pa je potrebno prilagoditi polje Total Length u IPv4 zaglavlju.
-
+ICMPv4 (Internet Control Message Protocol verzija 4) je verzija ICMP protokola koja se koristi unutar IPv4 mreža. Za razliku od nekih drugih protokola višeg sloja, ICMPv4 ne koristi pseudo-zaglavlje prilikom izračunavanja kontrolne sume – ona se računa samo na osnovu ICMP zaglavlja i podataka.
+Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip 8) i Echo Reply (tip 0). Kada uređaj primi Echo Request, generiše Echo Reply i pri tome je potrebno pravilno podesiti kontrolnu sumu. Budući da se pri kreiranju Echo Reply poruke mijenja prvenstveno polje Type (s 8 na 0), kontrolna suma se može prilagoditi inkrementalno, što ubrzava proces odgovora i smanjuje potrebu za ponovnim izračunavanjem cijelog paketa.
 
 ## Zaključak
 
 ## Literatura
 [1] "Detection of Covert Channels over ICMP Protocol", Dostupno na: https://hal.science/hal-02381398/file/AICCSA%202017%20sirine%20sayadi.pdf
+[2] "The Design and Implementation of an IPv6/IPv4 Network Address and Protocol Translator", Dostupno na: https://www.usenix.org/legacy/publications/library/proceedings/usenix98/full_papers/fiuczynski/fiuczynski.pdf
