@@ -54,12 +54,6 @@ Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip
 
 ---
 
-### Kratki opis
-
-- Modul koristi **ready/valid handshake** za prijem i slanje paketa preko Avalon-ST interfejsa.  
-- `in_sop` / `in_eop` i `out_sop` / `out_eop` pomažu FSM-u da prati početak i kraj paketa.  
-- `IP_ADDRESS` i `MAC_ADDRESS` se koriste za filtriranje dolaznih ICMP Echo Request paketa i kreiranje odgovarajućih Echo Reply paketa.
-
 
 ## Zaključak
 
