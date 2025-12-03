@@ -23,4 +23,5 @@ Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip
 
 ## Literatura
 [1] "Detection of Covert Channels over ICMP Protocol", Dostupno na: https://hal.science/hal-02381398/file/AICCSA%202017%20sirine%20sayadi.pdf
+
 [2] "The Design and Implementation of an IPv6/IPv4 Network Address and Protocol Translator", Dostupno na: https://www.usenix.org/legacy/publications/library/proceedings/usenix98/full_papers/fiuczynski/fiuczynski.pdf
