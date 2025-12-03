@@ -7,4 +7,5 @@ Internet Control Message Protocol (ICMP) predstavlja jedan od ključnih protokol
 
 Kao što je prikazano na slici 1, ICMP zaglavlje sastoji se od nekoliko osnovnih polja: Type (tip), Code (kod) i Checksum (kontrolna suma). U dijelu podatka mogu biti definisana dodatna polja, poput identifikatora i sekvencijskog broja, koji se koriste u ICMP echo zahtjevima (tip 8) i echo odgovorima (tip 0).
 
-![ICMP format okvira](Docs/image.png)
+<img src="Docs/image.png" alt="ICMP format okvira" width="500">
+
