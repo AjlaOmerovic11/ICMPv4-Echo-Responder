@@ -34,7 +34,7 @@ Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip
 | clock     | STD_LOGIC                | Glavni takt modula.                                                   |
 | reset     | STD_LOGIC                | Resetuje modul i FSM u početno stanje (IDLE).                       |
 | in_data   | STD_LOGIC_VECTOR(7 DOWNTO 0) | Ulazni bajtovi podataka sa Avalon-ST interfejsa.                     |
-| in_valid  | STD_LOGIC                | Indikator da je in_data valjan.                                     |
+| in_valid  | STD_LOGIC                | Indikator da je in_data ispravan.                                     |
 | in_sop    | STD_LOGIC                | Start of Packet – označava početak paketa.                            |
 | in_eop    | STD_LOGIC                | End of Packet – označava kraj paketa.                                 |
 | out_ready | STD_LOGIC                | Indikator da je odredište spremno za prijem izlaznih podataka.        |
@@ -46,7 +46,7 @@ Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip
 |--------------|----------------------------|----------------------------------------------------------------------|
 | in_ready   | STD_LOGIC                | Signal da modul može primiti novi bajt podataka.                     |
 | out_data   | STD_LOGIC_VECTOR(7 DOWNTO 0) | Izlazni bajtovi podataka (Echo Reply paket).                         |
-| out_valid  | STD_LOGIC                | Indikator da je out_data valjan i može biti pročitan.              |
+| out_valid  | STD_LOGIC                | Indikator da je out_data ispravan i može biti pročitan.              |
 | out_sop    | STD_LOGIC                | Start of Packet – označava početak Echo Reply paketa.                |
 | out_eop    | STD_LOGIC                | End of Packet – označava kraj Echo Reply paketa.                     |
 
