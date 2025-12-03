@@ -21,7 +21,7 @@ Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip
 ## Avalon ST
 Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka sa ready/valid handshake protokolom.
 
-## Generic parametri
+### Generic parametri
 
 | Parametar     | Tip                        | Opis                                                                 |
 |---------------|----------------------------|----------------------------------------------------------------------|
@@ -29,7 +29,7 @@ Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka
 | MAC_ADDRESS | STD_LOGIC_VECTOR(47 DOWNTO 0) | MAC adresa čvora, koristi se za formiranje Ethernet zaglavlja Echo Reply paketa. |
 
 
-## Ulazni signali (IN)
+### Ulazni signali (IN)
 
 | Signal      | Tip                        | Opis                                                                 |
 |-------------|----------------------------|----------------------------------------------------------------------|
