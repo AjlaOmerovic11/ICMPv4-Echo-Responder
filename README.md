@@ -19,6 +19,48 @@ U dijelu podatka mogu biti definisana dodatna polja, poput identifikatora i sekv
 ICMPv4 (Internet Control Message Protocol verzija 4) je verzija ICMP protokola koja se koristi unutar IPv4 mreža. Za razliku od nekih drugih protokola višeg sloja, ICMPv4 ne koristi pseudo-zaglavlje prilikom izračunavanja kontrolne sume. Kontrolna suma se računa samo na osnovu ICMP zaglavlja i podataka.
 Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip 8) i Echo Reply (tip 0). Kada uređaj primi Echo Request, generiše Echo Reply i pri tome je potrebno pravilno podesiti kontrolnu sumu. Budući da se pri kreiranju Echo Reply poruke mijenja prvenstveno polje Type (sa 8 na 0), kontrolna suma se može prilagoditi postepeno, što ubrzava proces odgovora i smanjuje potrebu za ponovnim izračunavanjem cijelog paketa [2].
 
+## GENERIC parametri
+
+| Parametar     | Tip                        | Opis                                                                 |
+|---------------|----------------------------|----------------------------------------------------------------------|
+| `IP_ADDRESS`  | `STD_LOGIC_VECTOR(31 DOWNTO 0)` | IP adresa čvora, koristi se za provjeru odredišne adrese u ICMP paketima. |
+| `MAC_ADDRESS` | `STD_LOGIC_VECTOR(47 DOWNTO 0)` | MAC adresa čvora, koristi se za formiranje Ethernet zaglavlja Echo Reply paketa. |
+
+---
+
+## Ulazni signali (IN)
+
+| Signal      | Tip                        | Opis                                                                 |
+|-------------|----------------------------|----------------------------------------------------------------------|
+| `clock`     | `STD_LOGIC`                | Glavni takt modula.                                                   |
+| `reset`     | `STD_LOGIC`                | Resetuje modul i FSM u početno stanje (`IDLE`).                       |
+| `in_data`   | `STD_LOGIC_VECTOR(7 DOWNTO 0)` | Ulazni bajtovi podataka sa Avalon-ST interfejsa.                     |
+| `in_valid`  | `STD_LOGIC`                | Indikator da je `in_data` valjan.                                     |
+| `in_sop`    | `STD_LOGIC`                | Start of Packet – označava početak paketa.                            |
+| `in_eop`    | `STD_LOGIC`                | End of Packet – označava kraj paketa.                                 |
+| `out_ready` | `STD_LOGIC`                | Indikator da je odredište spremno za prijem izlaznih podataka.        |
+
+---
+
+## Izlazni signali (OUT)
+
+| Signal       | Tip                        | Opis                                                                 |
+|--------------|----------------------------|----------------------------------------------------------------------|
+| `in_ready`   | `STD_LOGIC`                | Signal da modul može primiti novi bajt podataka.                     |
+| `out_data`   | `STD_LOGIC_VECTOR(7 DOWNTO 0)` | Izlazni bajtovi podataka (Echo Reply paket).                         |
+| `out_valid`  | `STD_LOGIC`                | Indikator da je `out_data` valjan i može biti pročitan.              |
+| `out_sop`    | `STD_LOGIC`                | Start of Packet – označava početak Echo Reply paketa.                |
+| `out_eop`    | `STD_LOGIC`                | End of Packet – označava kraj Echo Reply paketa.                     |
+
+---
+
+### Kratki opis
+
+- Modul koristi **ready/valid handshake** za prijem i slanje paketa preko Avalon-ST interfejsa.  
+- `in_sop` / `in_eop` i `out_sop` / `out_eop` pomažu FSM-u da prati početak i kraj paketa.  
+- `IP_ADDRESS` i `MAC_ADDRESS` se koriste za filtriranje dolaznih ICMP Echo Request paketa i kreiranje odgovarajućih Echo Reply paketa.
+
+
 ## Zaključak
 
 ## Literatura
