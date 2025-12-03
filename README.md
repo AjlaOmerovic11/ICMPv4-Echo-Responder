@@ -9,6 +9,10 @@ Kao što je prikazano na slici 1, ICMP zaglavlje sastoji se od nekoliko osnovnih
 
 <img src="Docs/image.png" alt="ICMP format okvira" width="500">
 
+ICMPv4 koristi 8-bitni pointer u poruci Parameter Problem koji ukazuje na mjesto u IP zaglavlju gdje je otkriven problem. Kada se šalje ICMPv4 greška, paket uključuje onoliko originalnog IP zaglavlja i podataka koliko može stati.
+Kada ICMPv4 generiše grešku:
+-U zaglavlje se ubacuje dio originalnog IP paketa koji je izazvao grešku.
+-Ukoliko se takav paket naknadno obrađuje (npr. prevođenje ili enkapsulacija), može se promijeniti ukupna dužina IP datagrama, pa je potrebno prilagoditi polje Total Length u IPv4 zaglavlju.
 
 
 ## Zaključak
