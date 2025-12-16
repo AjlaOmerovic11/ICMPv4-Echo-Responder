@@ -18,8 +18,9 @@ U dijelu podatka mogu biti definisana dodatna polja, poput identifikatora i sekv
 ICMPv4 (Internet Control Message Protocol verzija 4) je verzija ICMP protokola koja se koristi unutar IPv4 mreža. Za razliku od nekih drugih protokola višeg sloja, ICMPv4 ne koristi pseudo-zaglavlje prilikom izračunavanja kontrolne sume. Kontrolna suma se računa samo na osnovu ICMP zaglavlja i podataka.
 Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip 8) i Echo Reply (tip 0). Kada uređaj primi Echo Request, generiše Echo Reply i pri tome je potrebno pravilno podesiti kontrolnu sumu. Budući da se pri kreiranju Echo Reply poruke mijenja prvenstveno polje Type (sa 8 na 0), kontrolna suma se može prilagoditi postepeno, što ubrzava proces odgovora i smanjuje potrebu za ponovnim izračunavanjem cijelog paketa [2].
 
+
 <div align="center">
-<img src="Docs/icmp-overview.png" alt="ICMP format okvira" width="250">
+<img src="Docs/icmp-overview.png" alt="ICMP format okvira" width="300">
 <p><strong>Slika 2:</strong> Prikaz cijelog paketa.</p>
 </div>
 
