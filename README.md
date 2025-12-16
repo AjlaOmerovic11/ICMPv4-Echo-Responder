@@ -19,7 +19,7 @@ ICMPv4 (Internet Control Message Protocol verzija 4) je verzija ICMP protokola k
 Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip 8) i Echo Reply (tip 0). Kada uređaj primi Echo Request, generiše Echo Reply i pri tome je potrebno pravilno podesiti kontrolnu sumu. Budući da se pri kreiranju Echo Reply poruke mijenja prvenstveno polje Type (sa 8 na 0), kontrolna suma se može prilagoditi postepeno, što ubrzava proces odgovora i smanjuje potrebu za ponovnim izračunavanjem cijelog paketa [2].
 
 <div align="center">
-<img src="Docs/icmp-overview.png" alt="ICMP format okvira" width="100">
+<img src="Docs/icmp-overview.png" alt="ICMP format okvira" width="250">
 <p><strong>Slika 2:</strong> Prikaz cijelog paketa.</p>
 </div>
 
