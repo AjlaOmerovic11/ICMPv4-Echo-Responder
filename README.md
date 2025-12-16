@@ -18,6 +18,11 @@ U dijelu podatka mogu biti definisana dodatna polja, poput identifikatora i sekv
 ICMPv4 (Internet Control Message Protocol verzija 4) je verzija ICMP protokola koja se koristi unutar IPv4 mreža. Za razliku od nekih drugih protokola višeg sloja, ICMPv4 ne koristi pseudo-zaglavlje prilikom izračunavanja kontrolne sume. Kontrolna suma se računa samo na osnovu ICMP zaglavlja i podataka.
 Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip 8) i Echo Reply (tip 0). Kada uređaj primi Echo Request, generiše Echo Reply i pri tome je potrebno pravilno podesiti kontrolnu sumu. Budući da se pri kreiranju Echo Reply poruke mijenja prvenstveno polje Type (sa 8 na 0), kontrolna suma se može prilagoditi postepeno, što ubrzava proces odgovora i smanjuje potrebu za ponovnim izračunavanjem cijelog paketa [2].
 
+<div align="center">
+<img src="Docs/icmp_overview.png" alt="ICMP format okvira" width="700">
+<p><strong>Slika 2:</strong> Prikaz cijelog paketa.</p>
+</div>
+
 ## Avalon ST
 Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka sa ready/valid handshake protokolom.
 
@@ -74,7 +79,7 @@ U ovom scenariju ICMPv4 Echo Responder modula prima ICMP Echo Request paket upu�
 # Dijagram konačnog automata
 <div align="center">
 <img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="800">
-<p><strong>Slika 2:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
+<p><strong>Slika 3:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
 
 # Zaključak
