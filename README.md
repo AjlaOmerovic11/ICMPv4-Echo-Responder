@@ -76,6 +76,7 @@ U ovom scenariju ICMPv4 Echo Responder modula prima ICMP Echo Request paket upu�
 <img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="800">
 <p><strong>Slika 1:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
+
 # Zaključak
 
 ## Literatura
