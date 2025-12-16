@@ -108,6 +108,10 @@ Slanje podataka se vrši preko Avalon-ST izlaznog interfejsa uz poštovanje read
 <p><strong>Slika 3:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
 
+# Modeliranje u VHDL-u
+
+# Verifikacija rezultata pomoću simulacijskog alata ModelSim
+
 # Zaključak
 
 ## Literatura
