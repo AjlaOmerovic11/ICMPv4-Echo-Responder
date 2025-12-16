@@ -80,18 +80,18 @@ Dijagram stanja predstavlja grafičku specifikaciju konačnog automata i omoguć
 
 Konačni automat ICMPv4 Echo Responder modula sastoji se od ukupno šest stanja:
 
-1. IDLE – Početno stanje u kojem modul ne obrađuje nikakav paket i spreman je za prijem novog ulaznog toka podataka. Signal reset vraća automat u stanje IDLE, dok je izlazni interfejs neaktivan. Automat ostaje u ovom stanju sve dok signal in_sop ne postane aktivan, što označava početak novog Ethernet paketa.
+1. IDLE – Početno stanje u kojem modul ne obrađuje nikakav paket i spreman je za prijem novog ulaznog toka podataka. Signal reset vraća automat u stanje IDLE, dok je izlazni interfejs neaktivan. Automat ostaje u ovom stanju sve dok signal 'in_sop' ne postane aktivan, što označava početak novog Ethernet paketa.
 
-2. RECEIVE_HEADER – Obrada zaglavlja paketa u kojem se vrši parsiranje i validacija zaglavlja mrežnog paketa. Tokom ovog stanja, automat provjerava
+2. RECEIVE_HEADER – Obrada zaglavlja paketa u kojem se vrši parsiranje i validacija zaglavlja mrežnog paketa. Tokom ovog stanja, automat provjerava:
 - da li je Ethernet tip jednak vrijednosti 0x0800, čime se potvrđuje IPv4 protokol,
 - da li IP protokol ima vrijednost 1, što označava ICMP,
 - da li ICMP type polje ima vrijednost 8, čime se identifikuje ICMP Echo Request poruka.
 
 Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje RECEIVE_PAYLOAD.
 
-3. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. U ovom stanju, automat nastavlja da prima ulazne podatke sve do kraja paketa, ali ne vrši nikakvu dalju obradu niti generiše izlazne podatke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. Kada signal in_eop postane aktivan, što označava kraj paketa, automat se vraća u stanje IDLE.
+3. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. U ovom stanju, automat nastavlja da prima ulazne podatke sve do kraja paketa, ali ne vrši nikakvu dalju obradu niti generiše izlazne podatke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. Kada signal 'in_eop' postane aktivan, što označava kraj paketa, automat se vraća u stanje IDLE.
 
-4. RECEIVE_PAYLOAD – Prijem ICMP payload-a. Ulazni bajtovi se prihvataju sve dok signal in_eop ne označi kraj paketa. Tokom ovog stanja moguće je privremeno skladištenje payload-a radi kasnijeg slanja u ICMP Echo Reply poruci. Nakon prijema kompletnog payload-a, automat prelazi u stanje GENERATE_REPLY.
+4. RECEIVE_PAYLOAD – Prijem ICMP payload-a. Ulazni bajtovi se prihvataju sve dok signal 'in_eop' ne označi kraj paketa. Tokom ovog stanja moguće je privremeno skladištenje payload-a radi kasnijeg slanja u ICMP Echo Reply poruci. Nakon prijema kompletnog payload-a, automat prelazi u stanje GENERATE_REPLY.
 
 5. GENERATE_REPLY – Generisanje i slanje ICMP Echo Reply poruke. Tokom ovog stanja, izvode se sljedeće operacije:
 - zamjena izvorišne i odredišne MAC adrese,
@@ -99,9 +99,9 @@ Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da pake
 - promjena ICMP type polja na vrijednost 0 (Echo Reply),
 - slanje istog ICMP payload-a koji je primljen u Echo Request paketu.
 
-Slanje podataka se vrši preko Avalon-ST izlaznog interfejsa uz poštovanje ready/valid handshaking mehanizma. Ako je signal out_ready aktivan, automat kontinuirano šalje podatke. U slučaju da out_ready postane neaktivan, automat prelazi u stanje WAIT_READY.
+Slanje podataka se vrši preko Avalon-ST izlaznog interfejsa uz poštovanje ready/valid handshaking mehanizma. Ako je signal 'out_ready' aktivan, automat kontinuirano šalje podatke. U slučaju da 'out_ready' postane neaktivan, automat prelazi u stanje WAIT_READY.
 
-6. WAIT_READY – stanje koje omogućava ispravno rukovanje situacijama u kojima dolazi do backpressure-a na izlaznom interfejsu. U ovom stanju automat privremeno zaustavlja slanje podataka, zadržavajući trenutni bajt i stanje slanja. Kada signal out_ready ponovo postane aktivan, automat se vraća u stanje GENERATE_REPLY i nastavlja slanje ICMP Echo Reply paketa bez gubitka podataka. Nakon slanja posljednjeg bajta paketa i aktivacije signala out_ready, automat se vraća u početno stanje IDLE.
+6. WAIT_READY – stanje koje omogućava ispravno rukovanje situacijama u kojima dolazi do backpressure-a na izlaznom interfejsu. U ovom stanju automat privremeno zaustavlja slanje podataka, zadržavajući trenutni bajt i stanje slanja. Kada signal 'out_ready' ponovo postane aktivan, automat se vraća u stanje GENERATE_REPLY i nastavlja slanje ICMP Echo Reply paketa bez gubitka podataka. Nakon slanja posljednjeg bajta paketa i aktivacije signala 'out_ready', automat se vraća u početno stanje IDLE.
 
 <div align="center">
 <img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="800">
