@@ -76,7 +76,7 @@ U ovom scenariju ICMPv4 Echo Responder modula prima ICMP Echo Request paket upu�
 
 Konačni automat (engl. Finite State Machine – FSM) predstavlja tehniku modeliranja sekvencijalnih logičkih sklopova koja se često koristi u dizajnu digitalnih komunikacionih sistema i mrežnih procesora. FSM omogućava precizno definisanje ponašanja sistema kroz skup jasno definisanih stanja, prelaza između stanja na osnovu ulaznih signala, kao i generisanje odgovarajućih izlaznih signala. U ovom projektu, konačni automat se koristi za implementaciju ICMPv4 Echo Responder modula, čiji je zadatak prijem, analiza i obrada mrežnih paketa, te generisanje ICMP Echo Reply poruka kao odgovor na primljene ICMP Echo Request pakete.
 
-Dijagram stanja predstavlja grafičku specifikaciju konačnog automata i omogućava intuitivno razumijevanje toka obrade paketa. FSM parsira ulazni tok podataka bajt po bajt putem Avalon-ST interfejsa, identifikuje početak paketa, vrši validaciju zaglavlja Ethernet, IP i ICMP slojeva, obrađuje ICMP payload, te kontroliše slanje odgovora uz podršku ready/valid mehanizma, uključujući situacije sa pojavom backpressure-a.
+Dijagram stanja predstavlja grafičku specifikaciju konačnog automata i omogućava intuitivno razumijevanje toka obrade paketa. FSM parsira ulazni tok podataka bajt po bajt putem Avalon-ST interfejsa i identifikuje početak paketa, pri čemu vrši validaciju zaglavlja Ethernet, IP i ICMP slojeva. Nakon obrade ICMP payload-a, automat kontroliše slanje odgovora uz podršku ready/valid mehanizma, uključujući i situacije u kojima dolazi do pojave backpressure-a.
 
 Konačni automat ICMPv4 Echo Responder modula sastoji se od ukupno šest stanja:
 
@@ -89,7 +89,7 @@ Konačni automat ICMPv4 Echo Responder modula sastoji se od ukupno šest stanja:
 
 Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje RECEIVE_PAYLOAD.
 
-3. IGNORE – Ignorisanje paketa koje služi za obradu paketa koji nisu ICMP Echo Request poruke. U ovom stanju, automat nastavlja da prima ulazne podatke sve do kraja paketa, ali ne vrši nikakvu dalju obradu niti generiše izlazne podatke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. Kada signal in_eop postane aktivan, što označava kraj paketa, automat se vraća u stanje IDLE.
+3. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. U ovom stanju, automat nastavlja da prima ulazne podatke sve do kraja paketa, ali ne vrši nikakvu dalju obradu niti generiše izlazne podatke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. Kada signal in_eop postane aktivan, što označava kraj paketa, automat se vraća u stanje IDLE.
 
 4. RECEIVE_PAYLOAD – Prijem ICMP payload-a. Ulazni bajtovi se prihvataju sve dok signal in_eop ne označi kraj paketa. Tokom ovog stanja moguće je privremeno skladištenje payload-a radi kasnijeg slanja u ICMP Echo Reply poruci. Nakon prijema kompletnog payload-a, automat prelazi u stanje GENERATE_REPLY.
 
@@ -101,10 +101,7 @@ Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da pake
 
 Slanje podataka se vrši preko Avalon-ST izlaznog interfejsa uz poštovanje ready/valid handshaking mehanizma. Ako je signal out_ready aktivan, automat kontinuirano šalje podatke. U slučaju da out_ready postane neaktivan, automat prelazi u stanje WAIT_READY.
 
-6. WAIT_READY – stanje koje omogućava ispravno rukovanje situacijama u kojima dolazi do backpressure-a na izlaznom interfejsu. U ovom stanju automat privremeno zaustavlja slanje podataka, zadržavajući trenutni bajt i stanje slanja. Kada signal out_ready ponovo postane aktivan, automat se vraća u stanje GENERATE_REPLY i nastavlja slanje ICMP Echo Reply paketa bez gubitka podataka. Nakon slanja posljednjeg bajta paketa i aktivacije signala out_eop, automat se vraća u početno stanje IDLE.
-
-
-Opisani konačni automat omogućava pouzdanu i efikasnu implementaciju ICMPv4 Echo Responder modula, uz potpunu podršku za Avalon-ST ready/valid protokol. FSM je dizajniran tako da pravilno razlikuje ICMP Echo Request poruke od ostalog mrežnog saobraćaja, obezbjeđuje korektno generisanje Echo Reply poruka, te garantuje ispravan rad čak i u prisustvu backpressure-a na izlaznom interfejsu. Dijagram stanja pruža jasan pregled logike rada sistema i predstavlja osnovu za njegovu hardversku implementaciju u VHDL-u.
+6. WAIT_READY – stanje koje omogućava ispravno rukovanje situacijama u kojima dolazi do backpressure-a na izlaznom interfejsu. U ovom stanju automat privremeno zaustavlja slanje podataka, zadržavajući trenutni bajt i stanje slanja. Kada signal out_ready ponovo postane aktivan, automat se vraća u stanje GENERATE_REPLY i nastavlja slanje ICMP Echo Reply paketa bez gubitka podataka. Nakon slanja posljednjeg bajta paketa i aktivacije signala out_ready, automat se vraća u početno stanje IDLE.
 
 <div align="center">
 <img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="800">
