@@ -55,17 +55,20 @@ Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka
 
 ---
 # Identifikovani scenariji
-## Scenarij 1 - Echo Request i Echo Reply 
+## Scenarij 1 - Kontinuirani prijem ICMP Echo Request paketa  
 
-U ovom scenariju ICMPv4 Echo Responder modula prima ICMP Echo Request paket upućen na njegovu IP adresu. Paket dolazi bajt po bajt putem Avalon-ST interfejsa preko signala in_data, uz indikatore in_valid, in_sop i in_eop koji označavaju validnost, početak i kraj paketa. Nakon što je paket kompletno primljen i parsiran, modul odmah generiše ICMP Echo Reply koristeći iste podatke iz Echo Request paketa, uključujući zaglavlje i payload. Slanje Echo Reply paketa preko Avalon-ST izlaza odvija se kontinuirano i neprekidno, jer je out_ready stalno 1, a signali out_data, out_valid, out_sop i out_eop prenose paket bez zastoja ili gubitka podataka. Ovaj scenarij testira osnovnu funkcionalnost modula, osiguravajući da Echo Reply bude generisan i poslan odmah.
+U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa putem Avalon-ST interfejsa. Paket se prenosi kontinuirano, bajt po bajt, bez ikakvih prekida između uzastopnih bajtova. Pretpostavlja se da je prijemni interfejs uvijek spreman za prihvat podataka, zbog čega je signal in_ready stalno postavljen na logičku jedinicu. Svaki bajt paketa dolazi uz aktivan signal in_valid, čime se označava da su podaci na ulazu validni.
+Početak paketa je označen aktiviranjem signala in_sop na prvom bajtu, dok je kraj paketa označen signalom in_eop na posljednjem bajtu. Tokom prijema, modul prihvata svaki bajt odmah po njegovom dolasku, bez zadržavanja ili preskakanja podataka. Bajtovi se interno obrađuju u ispravnom redoslijedu, a ICMP zaglavlje se dekodira kako bi se prepoznalo da se radi o Echo Request poruci namijenjenoj IP adresi modula.
 
-## Scenarij 2 - Nije ICMP Echo poruka (ignorisanje)
+## Scenarij 2 - Generisanje ICMP Echo Reply paketa
+
+Ovaj scenarij obuhvata slanje ICMP Echo Reply paketa kao odgovor na prethodno primljeni Echo Request. Nakon što modul detektuje kraj prijema ulaznog paketa, započinje se proces generisanja odgovora. Slanje Echo Reply paketa vrši se također bajt po bajt, u kontinuiranom režimu, uz pretpostavku da je izlazni interfejs uvijek spreman za prihvatanje podataka, te je signal out_ready konstantno aktivan.
+Signal out_valid je aktivan tokom cijelog trajanja slanja paketa, čime se označava da su izlazni podaci validni. Prvi bajt Echo Reply paketa se šalje uz aktivan signal out_sop, dok je posljednji bajt označen signalom out_eop. Izlazni podaci sadrže korektno formirana IP i ICMP zaglavlja, pri čemu je ICMP Type polje postavljeno na vrijednost Echo Reply (0), dok se payload dio paketa prenosi neizmijenjen u odnosu na primljeni zahtjev.
+
+## Scenarij 3 - Nije ICMP Echo poruka (ignorisanje)
 
 U ovom scenariju ICMPv4 Echo Responder modula prima paket koji nije ICMP Echo Request. Paket može biti bilo koja druga poruka (npr. TCP, UDP ili drugi tip ICMP poruke). Modul provjerava IP protokol i ICMP type kod polja i kada utvrdi da paket nije Echo Request, ne generiše Echo Reply. Ulazni Avalon-ST signali nastavljaju prenos paketa ka modulu, a izlazni signali ostaju neaktivni za ovaj paket. Modul je spreman za prijem sljedećeg paketa, osiguravajući da se saobraćaj filtrira bez greške.
 
-## Scenarij 4 - Backpressure na ICMP Payload
-
-U ovom scenariju ICMPv4 Echo Responder modula prima ICMP Echo Request paket upućen na njegovu IP adresu. Nakon što modul parsira zaglavlje paketa i pripremi Echo Reply, slanje ICMP payload-a može biti privremeno zaustavljeno ako je signal out_ready = 0. Modul tada čuva trenutni bajt payload-a i čeka dok prijemnik ne postane spreman. Kada out_ready = 1, modul nastavlja slanje preostalih bajtova payload-a koristeći signale out_data, out_valid, out_sop i out_eop. Zaglavlje Echo Reply paketa je već poslano prije pauze, tako da se backpressure odnosi samo na dio koji sadrži ICMP payload. Ovaj scenarij testira sposobnost modula da pravilno upravlja ready/valid handshaking-om tokom slanja podataka i osigurava da Echo Reply paket ne bude izgubljen ili oštećen čak i kada prijemnik privremeno nije spreman.
 
 # Dijagram konačnog automata
 
