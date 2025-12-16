@@ -71,7 +71,11 @@ U ovom scenariju ICMPv4 Echo Responder modula prima paket koji nije ICMP Echo Re
 
 U ovom scenariju ICMPv4 Echo Responder modula prima ICMP Echo Request paket upućen na njegovu IP adresu. Nakon što modul parsira zaglavlje paketa i pripremi Echo Reply, slanje ICMP payload-a može biti privremeno zaustavljeno ako je signal out_ready = 0. Modul tada čuva trenutni bajt payload-a i čeka dok prijemnik ne postane spreman. Kada out_ready = 1, modul nastavlja slanje preostalih bajtova payload-a koristeći signale out_data, out_valid, out_sop i out_eop. Zaglavlje Echo Reply paketa je već poslano prije pauze, tako da se backpressure odnosi samo na dio koji sadrži ICMP payload. Ovaj scenarij testira sposobnost modula da pravilno upravlja ready/valid handshaking-om tokom slanja podataka i osigurava da Echo Reply paket ne bude izgubljen ili oštećen čak i kada prijemnik privremeno nije spreman.
 
-
+# Dijagram konačnog automata
+<div align="center">
+<img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+</div>
 # Zaključak
 
 ## Literatura
