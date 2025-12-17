@@ -101,7 +101,7 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, Ä
 
 
 <div align="center">
-<img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="800">
+<img src="FSM-draw_io/apc_draw.png" alt="ICMP format okvira" width="800">
 <p><strong>Slika 3:</strong> Prikaz FSM dijagrama pomoÄ‡u alata draw.io.</p>
 </div>
 
