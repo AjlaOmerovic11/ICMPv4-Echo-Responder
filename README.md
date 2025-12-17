@@ -78,28 +78,27 @@ Dijagram stanja predstavlja grafičku specifikaciju konačnog automata i omoguć
 
 Konačni automat ICMPv4 Echo Responder modula sastoji se od ukupno šest stanja:
 
-1. IDLE – Početno stanje u kojem modul ne obrađuje nikakav paket i spreman je za prijem novog ulaznog toka podataka. Signal reset vraća automat u stanje IDLE, dok je izlazni interfejs neaktivan. Automat ostaje u ovom stanju sve dok signal 'in_sop' ne postane aktivan, što označava početak novog Ethernet paketa.
+1. IDLE – Početno stanje u kojem modul ne obrađuje nikakav paket i spreman je za prijem novog ulaznog toka podataka. Signal reset vraća automat u stanje IDLE, dok je izlazni interfejs neaktivan. Uslov za prelazak u ETHERNET-IP_HEADER stanje je in_valid = '1' i in_sop = '1', kada je in_valid = '0' ostaje u IDLE.
 
-2. RECEIVE_HEADER – Obrada zaglavlja paketa u kojem se vrši parsiranje i validacija zaglavlja mrežnog paketa. Tokom ovog stanja, automat provjerava:
+2. ETHERNET-IP_HEADER – Obrada zaglavlja paketa u kojem se vrši parsiranje i validacija zaglavlja mrežnog paketa. Tokom ovog stanja, automat provjerava:
 - da li je Ethernet tip jednak vrijednosti 0x0800, čime se potvrđuje IPv4 protokol,
 - da li IP protokol ima vrijednost 1, što označava ICMP,
-- da li ICMP type polje ima vrijednost 8, čime se identifikuje ICMP Echo Request poruka.
+- da li IP adresa jednaka IP destinacijskoj adresi
 
-Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje RECEIVE_PAYLOAD.
+Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje ICMP_HEADER. 
 
-3. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. U ovom stanju, automat nastavlja da prima ulazne podatke sve do kraja paketa, ali ne vrši nikakvu dalju obradu niti generiše izlazne podatke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. Kada signal 'in_eop' postane aktivan, što označava kraj paketa, automat se vraća u stanje IDLE.
+3. ICMP_HEADER - Prijem ICMP zaglavlja paketa nakon što je IP header pročitan. FSM odlučuje da li je paket ICMP Echo Request ili ne. Ako ICMP_type = 8 (Echo Request), FSM prelazi u PAYLOAD. Ako ICMP_type ≠ 8, onda FSM prelazi u IGNORE.
+  
+4. PAYLOAD - FSM u ovom stanju aktivno prima bajt po bajt, svaki označen sa signalom in_valid. Svi primljeni bajtovi se pohranjuju u interni buffer (payload_mem), a svaki novi bajt povećava internu adresu (payload_index), kako bi se sačuvao pravilan redoslijed podataka.
+FSM ostaje u ovom stanju sve dok ne stigne signal in_eop, koji označava kraj paketa. Po primanju poslednjeg bajta payload-a, FSM prelazi u stanje SEND, spreman za generisanje i slanje Echo Reply paketa.
 
-4. RECEIVE_PAYLOAD – Prijem ICMP payload-a. Ulazni bajtovi se prihvataju sve dok signal 'in_eop' ne označi kraj paketa. Tokom ovog stanja moguće je privremeno skladištenje payload-a radi kasnijeg slanja u ICMP Echo Reply poruci. Nakon prijema kompletnog payload-a, automat prelazi u stanje GENERATE_REPLY.
+Takođe, modul je u ovom stanju stalno spreman za prijem (in_ready = '1'), ali ne generiše nikakve izlazne podatke (out_valid = '0').
 
-5. GENERATE_REPLY – Generisanje i slanje ICMP Echo Reply poruke. Tokom ovog stanja, izvode se sljedeće operacije:
-- zamjena izvorišne i odredišne MAC adrese,
-- zamjena izvorišne i odredišne IP adrese,
-- promjena ICMP type polja na vrijednost 0 (Echo Reply),
-- slanje istog ICMP payload-a koji je primljen u Echo Request paketu.
+5. SEND - U stanju SEND, modul generiše i šalje Echo Reply paket kao odgovor na prethodno primljeni Echo Request. FSM šalje paket bajt po bajt koristeći interni buffer koji sadrži kompletan paket, uključujući Ethernet/IP zaglavlja, ICMP zaglavlje i payload. Modul postavlja out_valid = 1 kada je bajt spreman za slanje, a interfejs može da prihvati bajt samo ako je out_ready = 1. Prvi bajt paketa označava se signalom out_sop = 1, dok poslednji bajt označava out_eop = 1. Brojač poslanih bajtova prati trenutni položaj u paketu.
+FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, čime se osigurava da nema gubljenja podataka. Nakon što je poslednji bajt uspešno poslan i interfejs spreman (out_ready = 1 AND tx_cnt = LAST_BYTE), FSM prelazi u stanje IDLE, spreman za prijem sledećeg paketa.
+   
+6. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. 
 
-Slanje podataka se vrši preko Avalon-ST izlaznog interfejsa uz poštovanje ready/valid handshaking mehanizma. Ako je signal 'out_ready' aktivan, automat kontinuirano šalje podatke. U slučaju da 'out_ready' postane neaktivan, automat prelazi u stanje WAIT_READY.
-
-6. WAIT_READY – stanje koje omogućava ispravno rukovanje situacijama u kojima dolazi do backpressure-a na izlaznom interfejsu. U ovom stanju automat privremeno zaustavlja slanje podataka, zadržavajući trenutni bajt i stanje slanja. Kada signal 'out_ready' ponovo postane aktivan, automat se vraća u stanje GENERATE_REPLY i nastavlja slanje ICMP Echo Reply paketa bez gubitka podataka. Nakon slanja posljednjeg bajta paketa i aktivacije signala 'out_ready', automat se vraća u početno stanje IDLE.
 
 <div align="center">
 <img src="Docs/apc_projekat.png" alt="ICMP format okvira" width="800">
