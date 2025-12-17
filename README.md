@@ -61,9 +61,10 @@ U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa
 Početak paketa je označen aktiviranjem signala in_sop na prvom bajtu, dok je kraj paketa označen signalom in_eop na posljednjem bajtu. Tokom prijema, modul prihvata svaki bajt odmah po njegovom dolasku, bez zadržavanja ili preskakanja podataka. Bajtovi se interno obrađuju u ispravnom redoslijedu, a ICMP zaglavlje se dekodira kako bi se prepoznalo da se radi o Echo Request poruci namijenjenoj IP adresi modula.
 
 <div align="center">
-<img src="WaveDrom/wave_scenarij1.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 2:</strong> Prikaz scenarija 1 u WaveDrom-u. </p>
+  <img src="WaveDrom/wave_scenarij1.png" alt="ICMP format okvira" width="800">
+  <p><strong>Slika 2:</strong> Prikaz scenarija 1 u WaveDrom-u.</p>
 </div>
+
 
 ## Scenarij 2 - Generisanje ICMP Echo Reply paketa
 
