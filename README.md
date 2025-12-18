@@ -72,7 +72,7 @@ U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa
 <p><strong>Slika 3:</strong> Prikaz scenarija 1 u WaveDrom dijagramu.</p>
 </div>
 
-## Scenarij 2 - Generisanje ICMP Echo Reply paketa
+## Scenarij 2 - ICMP Echo Reply (odgovor na Echo Request)
 
 Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa između requester i responder strane. Nakon prijema zahtjeva, responder formira Echo Reply paket sa zamijenjenim izvorišnim i odredišnim adresama, dok ICMP zaglavlje ima polje Type postavljeno na vrijednost 0. Payload i identifikaciona polja prenose se neizmijenjena.
 
