@@ -92,7 +92,7 @@ U ovom scenariju verifikuje se sposobnost ICMPv4 Echo Responder modula da nakon 
 
 ## Scenarij 3 - Nije ICMP Echo poruka (ignorisanje)
 
-U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo Request ili nije namijenjen ovom uređaju. Na osnovu analize Ethernet, IPv4, MAC adrese i ICMP zaglavlja, paket se ignoriše. U ovom slučaju ne dolazi do generisanja ICMP Echo Reply poruke.
+U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo Request ili nije namijenjen ovom uređaju. Na osnovu analize Ethernet-a, IPv4, MAC adrese i ICMP zaglavlja, paket se ignoriše. U ovom slučaju ne dolazi do generisanja ICMP Echo Reply poruke.
 
 <div align="center">
 <img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
@@ -111,6 +111,13 @@ U drugom slučaju paket se ignoriše zbog neispravne odredišne IP adrese u IPv4
 <div align="center">
 <img src="WaveDrom/sc3_blok2.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 8:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne IP adrese.</p>
+</div>
+
+U trećem slučaju paket se ignoriše zbog neispravnog ICMP zaglavlja. Nakon ispravne obrade Ethernet i IPv4 zaglavlja, utvrđuje se da ICMP poruka nije tipa Echo Request ili da sadrži neispravne vrijednosti u ICMP zaglavlju. Zbog toga se paket odbacuje na transportnom sloju, bez generisanja ICMP Echo Reply poruke i bez aktiviranja izlaznih signala.
+
+<div align="center">
+<img src="WaveDrom/sc3_blok2.png" alt="ICMP format okvira" width="1000">
+<p><strong>Slika 9:</strong> Prikaz scenarija 3 u WaveDromu za slučaj neispravnog ICMP zaglavlja.</p>
 </div>
 
 # Dijagram konačnog automata
