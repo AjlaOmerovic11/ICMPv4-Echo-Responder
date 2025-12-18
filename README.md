@@ -55,21 +55,36 @@ Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka
 
 ---
 # Identifikovani scenariji
+
 ## Scenarij 1 - Kontinuirani prijem ICMP Echo Request paketa  
 
-U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa putem Avalon-ST interfejsa. Paket se prenosi kontinuirano, bajt po bajt, bez ikakvih prekida između uzastopnih bajtova. Pretpostavlja se da je prijemni interfejs uvijek spreman za prihvat podataka, zbog čega je signal in_ready stalno postavljen na logičku jedinicu. Svaki bajt paketa dolazi uz aktivan signal in_valid, čime se označava da su podaci na ulazu validni.
-Početak paketa je označen aktiviranjem signala in_sop na prvom bajtu, dok je kraj paketa označen signalom in_eop na posljednjem bajtu. Tokom prijema, modul prihvata svaki bajt odmah po njegovom dolasku, bez zadržavanja ili preskakanja podataka. Bajtovi se interno obrađuju u ispravnom redoslijedu, a ICMP zaglavlje se dekodira kako bi se prepoznalo da se radi o Echo Request poruci namijenjenoj IP adresi modula.
+U ovom scenariju prikazan je prijem ICMP Echo Request paketa koji se prenosi unutar IPv4 paketa i Ethernet okvira. ICMPv4 Echo Responder parsira Ethernet, IPv4 i ICMP zaglavlja kako bi utvrdio da se radi o validnoj Echo Request poruci namijenjenoj njegovoj IP adresi. U ovom scenariju ne dolazi do generisanja odgovora.
+
+<div align="center">
+<img src="FSM-draw_io/image.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+</div>
 
 
 
 ## Scenarij 2 - Generisanje ICMP Echo Reply paketa
 
-Ovaj scenarij obuhvata slanje ICMP Echo Reply paketa kao odgovor na prethodno primljeni Echo Request. Nakon što modul detektuje kraj prijema ulaznog paketa, započinje se proces generisanja odgovora. Slanje Echo Reply paketa vrši se također bajt po bajt, u kontinuiranom režimu, uz pretpostavku da je izlazni interfejs uvijek spreman za prihvatanje podataka, te je signal out_ready konstantno aktivan.
-Signal out_valid je aktivan tokom cijelog trajanja slanja paketa, čime se označava da su izlazni podaci validni. Prvi bajt Echo Reply paketa se šalje uz aktivan signal out_sop, dok je posljednji bajt označen signalom out_eop. Izlazni podaci sadrže korektno formirana IP i ICMP zaglavlja, pri čemu je ICMP Type polje postavljeno na vrijednost Echo Reply (0), dok se payload dio paketa prenosi neizmijenjen u odnosu na primljeni zahtjev.
+Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa između requester i responder strane. Nakon prijema zahtjeva, responder formira Echo Reply paket sa zamijenjenim izvorišnim i odredišnim adresama, dok ICMP zaglavlje ima polje Type postavljeno na vrijednost 0. Payload i identifikaciona polja prenose se neizmijenjena.
+
+<div align="center">
+<img src="FSM-draw_io/image.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+</div>
+
 
 ## Scenarij 3 - Nije ICMP Echo poruka (ignorisanje)
 
-U ovom scenariju ICMPv4 Echo Responder modula prima paket koji nije ICMP Echo Request. Paket može biti bilo koja druga poruka (npr. TCP, UDP ili drugi tip ICMP poruke). Modul provjerava IP protokol i ICMP type kod polja i kada utvrdi da paket nije Echo Request, ne generiše Echo Reply. Ulazni Avalon-ST signali nastavljaju prenos paketa ka modulu, a izlazni signali ostaju neaktivni za ovaj paket. Modul je spreman za prijem sljedećeg paketa, osiguravajući da se saobraćaj filtrira bez greške.
+U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo Request ili nije namijenjen ovom uređaju. Na osnovu analize Ethernet, IPv4 i ICMP zaglavlja, paket se ignoriše. U ovom slučaju ne dolazi do generisanja ICMP Echo Reply poruke.
+
+<div align="center">
+<img src="FSM-draw_io/image.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+</div>
 
 
 # Dijagram konačnog automata
