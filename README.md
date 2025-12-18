@@ -81,6 +81,11 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 <p><strong>Slika 4:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
+<div align="center">
+<img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 4:</strong> Prikaz scenarija 2.</p>
+</div>
+
 
 
 ## Scenarij 3 - Nije ICMP Echo poruka (ignorisanje)
