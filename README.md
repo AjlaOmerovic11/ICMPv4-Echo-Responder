@@ -65,7 +65,12 @@ U ovom scenariju prikazan je prijem ICMP Echo Request paketa koji se prenosi unu
 <p><strong>Slika 2:</strong> Prikaz protokola prijema ICMP Echo Request paketa.</p>
 </div>
 
+U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa putem Avalon-ST interfejsa. Paket se prenosi kontinuirano, bajt po bajt, bez ikakvih prekida između uzastopnih bajtova. Pretpostavlja se da je prijemni interfejs uvijek spreman za prihvat podataka, zbog čega je signal in_ready stalno postavljen na logičku jedinicu. Svaki bajt paketa dolazi uz aktivan signal in_valid, čime se označava da su podaci na ulazu validni. Početak paketa je označen aktiviranjem signala in_sop na prvom bajtu, dok je kraj paketa označen signalom in_eop na posljednjem bajtu. Tokom prijema, modul prihvata svaki bajt odmah po njegovom dolasku, bez zadržavanja ili preskakanja podataka. Bajtovi se interno obrađuju u ispravnom redoslijedu, a ICMP zaglavlje se dekodira kako bi se prepoznalo da se radi o Echo Request poruci namijenjenoj IP adresi modula.
 
+<div align="center">
+<img src="WaveDrom/sc1_wave.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 3:</strong> Prikaz scenarija 1 u WaveDrom dijagramu.</p>
+</div>
 
 ## Scenarij 2 - Generisanje ICMP Echo Reply paketa
 
@@ -73,7 +78,7 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 
 <div align="center">
 <img src="FSM-draw_io/sc2.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 3:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
+<p><strong>Slika 4:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
 
@@ -83,7 +88,7 @@ U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo 
 
 <div align="center">
 <img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 4:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
+<p><strong>Slika 5:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
 
@@ -119,7 +124,7 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, �
 
 <div align="center">
 <img src="FSM-draw_io/apc_draw.png" alt="ICMP format okvira" width="800">
-<p><strong>Slika 3:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
+<p><strong>Slika 6:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
 
 # Modeliranje u VHDL-u
