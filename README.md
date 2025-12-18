@@ -103,9 +103,15 @@ U prvom slučaju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethe
 
 <div align="center">
 <img src="WaveDrom/sc3_blok1.png" alt="ICMP format okvira" width="1000">
-<p><strong>Slika 5:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne MAC adrese.</p>
+<p><strong>Slika 7:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne MAC adrese.</p>
 </div>
 
+U drugom slučaju paket se ignoriše zbog neispravne odredišne IP adrese u IPv4 zaglavlju. Iako je Ethernet okvir ispravno primljen, IP adresa odredišta ne odgovara IP adresi ICMP Echo Respondera. Zbog toga se paket odbacuje na mrežnom sloju, bez dalje obrade ICMP zaglavlja, te se ne generiše ICMP Echo Reply poruka.
+
+<div align="center">
+<img src="WaveDrom/sc3_blok1.png" alt="ICMP format okvira" width="1000">
+<p><strong>Slika 8:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne IP adrese.</p>
+</div>
 
 # Dijagram konačnog automata
 
