@@ -96,7 +96,7 @@ U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo 
 
 <div align="center">
 <img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 5:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
+<p><strong>Slika 6:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
 
