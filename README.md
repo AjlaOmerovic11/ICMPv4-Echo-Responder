@@ -81,9 +81,11 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 <p><strong>Slika 4:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
+U ovom scenariju verifikuje se sposobnost ICMPv4 Echo Responder modula da, nakon prijema kompletnog ICMP Echo Request paketa, generiše i pošalje odgovarajući ICMP Echo Reply paket. Po detekciji kraja ulaznog paketa (signal in_eop), modul započinje proces formiranja odgovora, pri čemu se zamjenjuju izvorišne i odredišne MAC i IP adrese, dok se ICMP Type polje postavlja na vrijednost Echo Reply (0). Slanje ICMP Echo Reply paketa odvija se bajt po bajt, u kontinuiranom režimu, uz pretpostavku da je izlazni interfejs uvijek spreman za prihvatanje podataka, zbog čega je signal out_ready konstantno aktivan. Tokom cijelog trajanja slanja odgovora signal out_valid je aktivan, čime se označava da su izlazni podaci validni, dok signal out_sop označava početak, a signal out_eop kraj Echo Reply paketa. Payload dio ICMP poruke prenosi se neizmijenjen u odnosu na primljeni Echo Request.
+
 <div align="center">
-<img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 4:</strong> Prikaz scenarija 2 u WaveDromu.</p>
+<img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="1000">
+<p><strong>Slika 5:</strong> Prikaz scenarija 2 u WaveDromu.</p>
 </div>
 
 
