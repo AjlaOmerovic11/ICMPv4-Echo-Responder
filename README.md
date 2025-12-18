@@ -61,8 +61,8 @@ Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka
 U ovom scenariju prikazan je prijem ICMP Echo Request paketa koji se prenosi unutar IPv4 paketa i Ethernet okvira. ICMPv4 Echo Responder parsira Ethernet, IPv4 i ICMP zaglavlja kako bi utvrdio da se radi o validnoj Echo Request poruci namijenjenoj njegovoj IP adresi. U ovom scenariju ne dolazi do generisanja odgovora.
 
 <div align="center">
-<img src="FSM-draw_io/image.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+<img src="FSM-draw_io/sc1.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz protokola prijema ICMP Echo Request paketa.</p>
 </div>
 
 
@@ -72,8 +72,8 @@ U ovom scenariju prikazan je prijem ICMP Echo Request paketa koji se prenosi unu
 Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa između requester i responder strane. Nakon prijema zahtjeva, responder formira Echo Reply paket sa zamijenjenim izvorišnim i odredišnim adresama, dok ICMP zaglavlje ima polje Type postavljeno na vrijednost 0. Payload i identifikaciona polja prenose se neizmijenjena.
 
 <div align="center">
-<img src="FSM-draw_io/image.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+<img src="FSM-draw_io/sc2.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
 
@@ -82,8 +82,8 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo Request ili nije namijenjen ovom uređaju. Na osnovu analize Ethernet, IPv4 i ICMP zaglavlja, paket se ignoriše. U ovom slučaju ne dolazi do generisanja ICMP Echo Reply poruke.
 
 <div align="center">
-<img src="FSM-draw_io/image.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
+<img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
+<p><strong>Slika 1:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
 
