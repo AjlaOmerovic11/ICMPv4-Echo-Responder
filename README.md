@@ -62,7 +62,7 @@ U ovom scenariju prikazan je prijem ICMP Echo Request paketa koji se prenosi unu
 
 <div align="center">
 <img src="FSM-draw_io/sc1.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 1:</strong> Prikaz protokola prijema ICMP Echo Request paketa.</p>
+<p><strong>Slika 2:</strong> Prikaz protokola prijema ICMP Echo Request paketa.</p>
 </div>
 
 
@@ -73,7 +73,7 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 
 <div align="center">
 <img src="FSM-draw_io/sc2.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 1:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
+<p><strong>Slika 3:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
 
@@ -83,7 +83,7 @@ U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo 
 
 <div align="center">
 <img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 1:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
+<p><strong>Slika 4:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
 
