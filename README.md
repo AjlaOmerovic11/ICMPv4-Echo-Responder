@@ -99,7 +99,8 @@ U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo 
 <p><strong>Slika 6:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
-U prvom slučaju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethernet zaglavlju. Pošto MAC adresa ne odgovara MAC adresi ICMP Echo Respondera, paket se odbacuje na Ethernet sloju. Zbog toga se ne vrši dalja obrada IPv4 i ICMP zaglavlja, niti se generiše ICMP Echo Reply poruka.
+U ovom scenariju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethernet zaglavlju. Ukoliko MAC adresa ne odgovara lokalnoj MAC adresi ICMPv4 Echo Respondera, paket se odbacuje na Ethernet sloju i ne dolazi do obrade IPv4 i ICMP zaglavlja, niti do generisanja ICMP Echo Reply poruke.
+Prijem započinje aktiviranjem signala in_sop u trenutku D1, nakon čega FSM obrađuje Ethernet zaglavlje u intervalu D1–D14. Bajtovi D1–D6 predstavljaju odredišnu MAC adresu, tokom kojih se detektuje neusklađenost. Iako se greška prepoznaje na početku (D1-D6), modul završava prijem Ethernet zaglavlja, a zatim prelazi u stanje IGNORE i odbacuje ostatak paketa.
 
 <div align="center">
 <img src="WaveDrom/sc3_bl1.png" alt="ICMP format okvira" width="1000">
