@@ -99,6 +99,13 @@ U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo 
 <p><strong>Slika 6:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
+U prvom slučaju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethernet zaglavlju. Pošto MAC adresa ne odgovara MAC adresi ICMP Echo Respondera, paket se odbacuje na Ethernet sloju. Zbog toga se ne vrši dalja obrada IPv4 i ICMP zaglavlja, niti se generiše ICMP Echo Reply poruka.
+
+<div align="center">
+<img src="WaveDrom/sc3_blok1.png" alt="ICMP format okvira" width="1000">
+<p><strong>Slika 5:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne MAC adrese.</p>
+</div>
+
 
 # Dijagram konačnog automata
 
