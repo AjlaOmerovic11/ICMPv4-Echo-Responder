@@ -152,7 +152,7 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, �
 
 <div align="center">
 <img src="FSM-draw_io/apc_draw.png" alt="ICMP format okvira" width="800">
-<p><strong>Slika 6:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
+<p><strong>Slika 10:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
 
 # Modeliranje u VHDL-u
