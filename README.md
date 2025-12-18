@@ -116,7 +116,7 @@ U drugom slučaju paket se ignoriše zbog neispravne odredišne IP adrese u IPv4
 U trećem slučaju paket se ignoriše zbog neispravnog ICMP zaglavlja. Nakon ispravne obrade Ethernet i IPv4 zaglavlja, utvrđuje se da ICMP poruka nije tipa Echo Request ili da sadrži neispravne vrijednosti u ICMP zaglavlju. Zbog toga se paket odbacuje na transportnom sloju, bez generisanja ICMP Echo Reply poruke i bez aktiviranja izlaznih signala.
 
 <div align="center">
-<img src="WaveDrom/sc3_blok2.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/sc3_blok3.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 9:</strong> Prikaz scenarija 3 u WaveDromu za slučaj neispravnog ICMP zaglavlja.</p>
 </div>
 
