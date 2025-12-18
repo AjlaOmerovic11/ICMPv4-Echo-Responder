@@ -77,13 +77,13 @@ U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa
 Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa između requester i responder strane. Nakon prijema zahtjeva, responder formira Echo Reply paket sa zamijenjenim izvorišnim i odredišnim adresama, dok ICMP zaglavlje ima polje Type postavljeno na vrijednost 0. Payload i identifikaciona polja prenose se neizmijenjena.
 
 <div align="center">
-<img src="FSM-draw_io/sc2_wavedrom.png" alt="ICMP format okvira" width="500">
+<img src="FSM-draw_io/sc2.png" alt="ICMP format okvira" width="500">
 <p><strong>Slika 4:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
 <div align="center">
-<img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 4:</strong> Prikaz scenarija 2.</p>
+<img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 4:</strong> Prikaz scenarija 2 u WaveDromu.</p>
 </div>
 
 
