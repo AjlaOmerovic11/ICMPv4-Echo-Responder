@@ -82,6 +82,11 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 </div>
 
 
+<div align="center">
+<img src="WaveDrom/sc2_wave.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 3:</strong> Prikaz scenarija 2 u WaveDrom dijagramu.</p>
+</div>
+
 ## Scenarij 3 - Nije ICMP Echo poruka (ignorisanje)
 
 U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo Request ili nije namijenjen ovom uređaju. Na osnovu analize Ethernet, IPv4 i ICMP zaglavlja, paket se ignoriše. U ovom slučaju ne dolazi do generisanja ICMP Echo Reply poruke.
