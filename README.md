@@ -128,32 +128,33 @@ Konačni automat (engl. Finite State Machine – FSM) predstavlja tehniku modeli
 
 Dijagram stanja predstavlja grafičku specifikaciju konačnog automata i omogućava intuitivno razumijevanje toka obrade paketa. FSM parsira ulazni tok podataka bajt po bajt putem Avalon-ST interfejsa i identifikuje početak paketa, pri čemu vrši validaciju zaglavlja Ethernet, IP i ICMP slojeva. Nakon obrade ICMP payload-a, automat kontroliše slanje odgovora uz podršku ready/valid mehanizma.
 
-Konačni automat ICMPv4 Echo Responder modula sastoji se od ukupno šest stanja:
+Konačni automat ICMPv4 Echo Responder modula sastoji se od ukupno sedam stanja:
 
-1. IDLE – Početno stanje u kojem modul ne obrađuje nikakav paket i spreman je za prijem novog ulaznog toka podataka. Signal reset vraća automat u stanje IDLE, dok je izlazni interfejs neaktivan. Uslov za prelazak u ETHERNET-IP_HEADER stanje je in_valid = '1' i in_sop = '1', kada je in_valid = '0' ostaje u IDLE.
-
-2. ETHERNET-IP_HEADER – Obrada zaglavlja paketa u kojem se vrši parsiranje i validacija zaglavlja mrežnog paketa. Tokom ovog stanja, automat provjerava:
-- da li je Ethernet tip jednak vrijednosti 0x0800, čime se potvrđuje IPv4 protokol,
-- da li IP protokol ima vrijednost 1, što označava ICMP,
-- da li IP adresa jednaka IP destinacijskoj adresi
-
-Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje ICMP_HEADER. 
-
-3. ICMP_HEADER - Prijem ICMP zaglavlja paketa nakon što je IP header pročitan. FSM odlučuje da li je paket ICMP Echo Request ili ne. Ako ICMP_type = 8 (Echo Request), FSM prelazi u PAYLOAD. Ako ICMP_type ≠ 8, onda FSM prelazi u IGNORE.
+1. IDLE – Početno stanje u kojem modul ne obrađuje nikakav paket i spreman je za prijem novog ulaznog toka podataka. Signal reset vraća automat u stanje IDLE, dok je izlazni interfejs neaktivan. Uslov za prelazak u ETHERNET_HEADER stanje je in_valid = '1' i in_sop = '1'. FSM ostaje u ovom stanju dok je in_valid = '0'.
   
-4. PAYLOAD - FSM u ovom stanju aktivno prima bajt po bajt, svaki označen sa signalom in_valid. Svi primljeni bajtovi se pohranjuju u interni buffer (payload_mem), a svaki novi bajt povećava internu adresu (payload_index), kako bi se sačuvao pravilan redoslijed podataka.
+3. ETHERNET_HEADER – Obrada zaglavlja paketa u kojem se vrši parsiranje i validacija zaglavlja mrežnog paketa. Tokom ovog stanja, automat provjerava:
+- da li je Ethernet tip jednak vrijednosti 0x0800, čime se potvrđuje IPv4 protokol,
+- da li odredišna MAC adresa odgovara lokalnoj MAC adresi modul.
+
+Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje IP_HEADER. 
+
+3. IP_HEADER - Obrada IPv4 zaglavlje paketa. Provjerava se da li je odredišna IP adresa jednaka lokalnoj IP adresi modula i da li polje Protocol ima vrijednost 1. Na taj način se potvrđuje da se radi o ICMP paketu. Ako su uslovi ispunjeni, FSM prelazi u stanje ICMP_HEADER. U suprotnom, paket se odbacuje prelaskom u stanje IGNORE.
+
+4. ICMP_HEADER - Prijem ICMP zaglavlja paketa nakon što je IP header pročitan. FSM odlučuje da li je paket ICMP Echo Request ili ne. Ako ICMP_type = 8 (Echo Request), FSM prelazi u PAYLOAD. Ako ICMP_type ≠ 8, onda FSM prelazi u IGNORE.
+  
+5. PAYLOAD - FSM u ovom stanju aktivno prima bajt po bajt, svaki označen sa signalom in_valid. Svi primljeni bajtovi se pohranjuju u interni buffer (payload_mem), a svaki novi bajt povećava internu adresu (payload_index), kako bi se sačuvao pravilan redoslijed podataka.
 FSM ostaje u ovom stanju sve dok ne stigne signal in_eop, koji označava kraj paketa. Po primanju poslednjeg bajta payload-a, FSM prelazi u stanje SEND, spreman za generisanje i slanje Echo Reply paketa.
 
-Takođe, modul je u ovom stanju stalno spreman za prijem (in_ready = '1'), ali ne generiše nikakve izlazne podatke (out_valid = '0').
+Također, modul je u ovom stanju stalno spreman za prijem (in_ready = '1'), ali ne generiše nikakve izlazne podatke (out_valid = '0').
 
-5. SEND - U stanju SEND, modul generiše i šalje Echo Reply paket kao odgovor na prethodno primljeni Echo Request. FSM šalje paket bajt po bajt koristeći interni buffer koji sadrži kompletan paket, uključujući Ethernet/IP zaglavlja, ICMP zaglavlje i payload. Modul postavlja out_valid = 1 kada je bajt spreman za slanje, a interfejs može da prihvati bajt samo ako je out_ready = 1. Prvi bajt paketa označava se signalom out_sop = 1, dok poslednji bajt označava out_eop = 1. Brojač poslanih bajtova prati trenutni položaj u paketu.
-FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, čime se osigurava da nema gubljenja podataka. Nakon što je poslednji bajt uspešno poslan i interfejs spreman (out_ready = 1 AND tx_cnt = LAST_BYTE), FSM prelazi u stanje IDLE, spreman za prijem sledećeg paketa.
+6. SEND - U stanju SEND, modul generiše i šalje Echo Reply paket kao odgovor na prethodno primljeni Echo Request. Paket se šalje bajt po bajt koristeći interni buffer, koji sadrži kompletan paket, uključujući Ethernet, IP zaglavlja, ICMP zaglavlje i payload, uz aktivan signal out_valid. Slanje se vrši samo kada je out_ready = '1', čime se poštuje Avalon-ST ready/valid mehanizam. Prvi bajt odgovora označen je signalom out_sop = '1', dok je poslednji bajt označen signalom out_eop = '1'. FSM ostaje u ovom stanju dok svi bajtovi nisu uspješno poslani. Nakon slanja posljednjeg bajta, FSM se vraća u stanje IDLE.
+FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, čime se osigurava da nema gubljenja podataka. Nakon što je poslednji bajt uspješno poslan i interfejs spreman (out_ready = '1' i brojac = posljednji_bit), FSM prelazi u stanje IDLE i spreman je za prijem sljedećeg paketa.
    
-6. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. 
+8. IGNORE – Ignorisanje paketa koje nisu tip ICMP Echo Request poruke. Na ovaj način se obezbjeđuje da nevalidni paketi ne utiču na rad modula. 
 
 
 <div align="center">
-<img src="FSM-draw_io/apc_draw.png" alt="ICMP format okvira" width="800">
+<img src="FSM-draw_io/FSM_diagram.png" alt="ICMP format okvira" width="800">
 <p><strong>Slika 10:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
 
