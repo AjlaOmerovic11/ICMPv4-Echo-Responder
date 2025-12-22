@@ -72,6 +72,14 @@ U ovom scenariju testira se osnovni mehanizam prijema ICMPv4 Echo Request paketa
 <p><strong>Slika 3:</strong> Prikaz scenarija 1 u WaveDrom dijagramu.</p>
 </div>
 
+U Scenariju 1 bajtovi D1–D50 predstavljaju kompletan ICMP Echo Request paket koji je namijenjen ovom čvoru. Tokom prijema:
+- D1–D6 (Destination MAC): modul prima i upoređuje Destination MAC adresu sa parametrom MAC_ADDRESS
+- D7–D12 (Source MAC): izvorišna MAC adresa Ethernet okvira
+- D13–D14 (EtherType): vrijednost 0x0800 (IPv4)
+- D15–D34 (IPv4 header): iz IPv4 zaglavlja se provjerava da li je odredišna IP adresa jednaka IP_ADDRESS i da li je Protocol polje postavljeno na ICMP, IP zaglavlje uključuje Src IP, Dest IP i Protocol polje
+- D35–D42 (ICMP header): iz ICMP zaglavlja se detektuje da je Type = 8 (Echo Request), ICMP zaglavlje uključuje Type, Code, Checksum, Identifier i Sequence Number
+- D43–D50 (ICMP payload): podaci ICMP poruke (neobrađeni payload)
+
 ## Scenarij 2 - ICMP Echo Reply (odgovor na Echo Request)
 
 Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa između requester i responder strane. Nakon prijema zahtjeva, responder formira Echo Reply paket sa zamijenjenim izvorišnim i odredišnim adresama, dok ICMP zaglavlje ima polje Type postavljeno na vrijednost 0. Payload i identifikaciona polja prenose se neizmijenjena.
@@ -88,7 +96,11 @@ U ovom scenariju verifikuje se sposobnost ICMPv4 Echo Responder modula da nakon 
 <p><strong>Slika 5:</strong> Prikaz scenarija 2 u WaveDromu.</p>
 </div>
 
-
+U Scenariju 2 ulazni bajtovi D1–D50 imaju isto protokolno značenje kao u Scenariju 1, ali predstavljaju validan ICMP Echo Request paket. Nakon prijema posljednjeg bajta (D50), modul započinje generisanje ICMP Echo Reply paketa. Izlazni bajtovi takođe se prenose bajt-po-bajt i imaju sljedeće značenje:
+- R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama
+- R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama
+- R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply)
+- R43 – R50: ICMP payload identičan payloadu primljenog Echo Request paketa
 
 ## Scenarij 3 - Nije ICMP Echo poruka (ignorisanje)
 
