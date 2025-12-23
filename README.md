@@ -63,17 +63,17 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 
 <div align="center">
 <img src="FSM-draw_io/sc2.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 4:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
+<p><strong>Slika 2:</strong> Prikaz protokola razmjene ICMP Echo Request i Echo Reply paketa.</p>
 </div>
 
 U ovom scenariju verifikuje se sposobnost ICMPv4 Echo Responder modula da nakon prijema kompletnog ICMP Echo Request paketa, generiše i pošalje odgovarajući ICMP Echo Reply paket. Po detekciji kraja ulaznog paketa (signal in_eop), modul započinje proces formiranja odgovora, pri čemu se zamjenjuju izvorišne i odredišne MAC i IP adrese, dok se ICMP Type polje postavlja na vrijednost Echo Reply (0). Slanje ICMP Echo Reply paketa odvija se bajt po bajt, u kontinuiranom režimu, uz pretpostavku da je izlazni interfejs uvijek spreman za prihvatanje podataka, zbog čega je signal out_ready konstantno aktivan. Tokom cijelog trajanja slanja odgovora signal out_valid je aktivan. Na taj način se označava da su izlazni podaci validni. Signal out_sop označava početak, a signal out_eop kraj Echo Reply paketa.
 
 <div align="center">
 <img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="1000">
-<p><strong>Slika 5:</strong> Prikaz scenarija 2 u WaveDromu.</p>
+<p><strong>Slika 3:</strong> Prikaz scenarija 1 u WaveDromu.</p>
 </div>
 
-U Scenariju 2 ulazni bajtovi D1–D50 imaju sljedeće protokolno značenje:
+U Scenariju 1 ulazni bajtovi D1–D50 imaju sljedeće protokolno značenje:
 
 - D1–D6 (Destination MAC): modul prima i upoređuje Destination MAC adresu sa parametrom MAC_ADDRESS
 - D7–D12 (Source MAC): izvorišna MAC adresa Ethernet okvira
@@ -95,7 +95,7 @@ U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo 
 
 <div align="center">
 <img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
-<p><strong>Slika 6:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
+<p><strong>Slika 4:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
 U ovom scenariju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethernet zaglavlju. Ukoliko MAC adresa ne odgovara lokalnoj MAC adresi ICMPv4 Echo Respondera, paket se odbacuje na Ethernet sloju i ne dolazi do obrade IPv4 i ICMP zaglavlja, niti do generisanja ICMP Echo Reply poruke.
@@ -103,14 +103,14 @@ Prijem započinje aktiviranjem signala in_sop u trenutku D1, nakon čega FSM obr
 
 <div align="center">
 <img src="WaveDrom/sc3_bl1.png" alt="ICMP format okvira" width="1000">
-<p><strong>Slika 7:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne MAC adrese.</p>
+<p><strong>Slika 5:</strong> Prikaz scenarija 2 u WaveDromu za slučaj pogrešne MAC adrese.</p>
 </div>
 
 U ovom scenariju ICMPv4 Echo Responder prima Ethernet okvir sa ispravnom odredišnom MAC adresom. U ovom slučaju, Ethernet zaglavlje se obrađuje. Nakon toga, prelazi u stanje IP_HDR u kojem se obrađuje IPv4 zaglavlje u intervalu D15–D34. IPv4 zaglavlje ima fiksnu dužinu od 20 bajtova i sadrži osnovna kontrolna polja, uključujući izvorišnu i odredišnu IP adresu. Tokom obrade IPv4 zaglavlja vrši se provjera odredišne IP adrese. Ukoliko IP adresa ne odgovara lokalnoj IP adresi ICMPv4 Echo Respondera, paket se odbacuje na mrežnom sloju. FSM zatim prelazi u stanje IGNORE, u kojem se ostatak paketa odbacuje, nema obrade ICMP zaglavlja i ne generiše se ICMP Echo Reply poruka. Po prijemu signala in_eop, FSM se vraća u stanje IDLE.
 
 <div align="center">
 <img src="WaveDrom/sc3_blok2.png" alt="ICMP format okvira" width="1000">
-<p><strong>Slika 8:</strong> Prikaz scenarija 3 u WaveDromu za slučaj pogrešne IP adrese.</p>
+<p><strong>Slika 6:</strong> Prikaz scenarija 2 u WaveDromu za slučaj pogrešne IP adrese.</p>
 </div>
 
 U ovom scenariju ICMPv4 Echo Responder ispravno obrađuje Ethernet zaglavlje (D1–D14) i IPv4 zaglavlje (D15–D34), nakon čega FSM prelazi u stanje ICMP_HDR. Tokom obrade ICMP zaglavlja (D35–D42) provjerava se tip ICMP poruke i osnovna kontrolna polja.
@@ -118,7 +118,7 @@ Kada ICMP poruka nije tipa Echo Request ili sadrži neispravne vrijednosti, pake
 
 <div align="center">
 <img src="WaveDrom/sc3_blok3.png" alt="ICMP format okvira" width="1000">
-<p><strong>Slika 9:</strong> Prikaz scenarija 3 u WaveDromu za slučaj neispravnog ICMP zaglavlja.</p>
+<p><strong>Slika 7:</strong> Prikaz scenarija 2 u WaveDromu za slučaj neispravnog ICMP zaglavlja.</p>
 </div>
 
 # Dijagram konačnog automata
@@ -154,7 +154,7 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, �
 
 <div align="center">
 <img src="FSM-draw_io/FSM_diagram.png" alt="ICMP format okvira" width="800">
-<p><strong>Slika 10:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
+<p><strong>Slika 8:</strong> Prikaz FSM dijagrama pomoću alata draw.io.</p>
 </div>
 
 # Modeliranje u VHDL-u
