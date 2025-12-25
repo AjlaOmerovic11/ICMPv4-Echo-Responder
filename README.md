@@ -75,19 +75,34 @@ U ovom scenariju verifikuje se sposobnost ICMPv4 Echo Responder modula da nakon 
 
 U Scenariju 1 ulazni bajtovi D1–D50 imaju sljedeće protokolno značenje:
 
-- D1–D6 (Destination MAC): modul prima i upoređuje Destination MAC adresu sa parametrom MAC_ADDRESS
-- D7–D12 (Source MAC): izvorišna MAC adresa Ethernet okvira
-- D13–D14 (EtherType): vrijednost 0x0800 (IPv4)
-- D15–D34 (IPv4 header): iz IPv4 zaglavlja se provjerava da li je odredišna IP adresa jednaka IP_ADDRESS i da li je Protocol polje postavljeno na ICMP, IP zaglavlje uključuje Src IP, Dest IP i Protocol polje
-- D35–D42 (ICMP header): iz ICMP zaglavlja se detektuje da je Type = 8 (Echo Request), ICMP zaglavlje uključuje Type, Code, Checksum, Identifier i Sequence Number
-- D43–D50 (ICMP payload): podaci ICMP poruke (neobrađeni payload)
+1. D1-D14 (Ethernet header): Ethernet zaglavlje uključuje sljedeća polja:
+  - D1–D6 (Destination MAC): modul prima i upoređuje Destination MAC adresu sa parametrom MAC_ADDRESS,
+  - D7–D12 (Source MAC): izvorišna MAC adresa Ethernet okvira,
+  - D13–D14 (EtherType): vrijednost 0x0800 (IPv4).
+2. D15–D34 (IPv4 header): iz IPv4 zaglavlja se provjerava da li je odredišna IP adresa jednaka IP_ADDRESS i da li je Protocol polje postavljeno na ICMP. IP zaglavlje se može opisati na sljedeći način:
+  - D15: Ovo polje sadrži verziju IP protokola (IPv4) i dužinu zaglavlja,
+  - D16: Označava prioritet i kvalitet servisa (ToS),
+  - D17–D18: Ukupna dužina IP paketa (zaglavlje + payload),
+  - D19–D20: Identifikator fragmentacije,
+  - D21–D22: Polja vezana za fragmentaciju,
+  - D23: Time To Live (TTL) koji ograničava životni vijek paketa u mreži,
+  - D24: Protocol polje IPv4 zaglavlja,
+  - D25-D26: Header Checksum,
+  - D27-D30: Izvorišna IP adresa pošiljaoca,
+  - D31-D34: Odredišna IP adresa IPv4 paketa.
+3. D35–D42 (ICMP header): ICMP zaglavlje ima fiksnu dužinu od 8 bajtova i sastoji se od sljedećih polja:
+  - D35: Type
+  - D36: Code
+  - D37–D38: Checksum
+  - D39–D40: Identifier
+  - D41–D42: Sequence Number
+4. D43–D50 (Payload): predstavlja završni dio okvira i u ovom scenariju se tretira kao niz korisničkih podataka koji se ne obrađuju, već se u potpunosti i neizmijenjeni prenose u odgovor.
 
-
-Nakon prijema posljednjeg bajta (D50), modul započinje generisanje ICMP Echo Reply paketa. Izlazni bajtovi takođe se prenose bajt-po-bajt i imaju sljedeće značenje:
-- R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama
-- R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama
-- R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply)
-- R43 – R50: ICMP payload identičan payloadu primljenog Echo Request paketa
+Odredišna MAC adresa, odredišna IP adresa i ICMP Type polje imaju ključnu ulogu u implementaciji, jer se njihova vrijednost provjerava u VHDL kodu kako bi se obradili samo ICMP Echo Request paketi namijenjeni ovom modulu. Nakon prijema posljednjeg bajta (D50), modul započinje generisanje ICMP Echo Reply paketa. Izlazni bajtovi takođe se prenose bajt-po-bajt i imaju sljedeće značenje:
+1. R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama
+2. R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama
+3. R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply)
+4. R43 – R50: ICMP payload identičan payloadu primljenog Echo Request paketa
 
 ## Scenarij 2 - Nije ICMP Echo poruka (ignorisanje)
 
