@@ -99,10 +99,10 @@ U Scenariju 1 ulazni bajtovi D1–D50 imaju sljedeće protokolno značenje:
 4. D43–D50 (Payload): predstavlja završni dio okvira i u ovom scenariju se tretira kao niz korisničkih podataka koji se ne obrađuju, već se u potpunosti i neizmijenjeni prenose u odgovor.
 
 Odredišna MAC adresa, odredišna IP adresa i ICMP Type polje imaju ključnu ulogu u implementaciji, jer se njihova vrijednost provjerava u VHDL kodu kako bi se obradili samo ICMP Echo Request paketi namijenjeni ovom modulu. Nakon prijema posljednjeg bajta (D50), modul započinje generisanje ICMP Echo Reply paketa. Izlazni bajtovi takođe se prenose bajt-po-bajt i imaju sljedeće značenje:
-1. R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama
-2. R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama
-3. R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply)
-4. R43 – R50: ICMP payload identičan payloadu primljenog Echo Request paketa
+1. R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama,
+2. R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama,
+3. R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply),
+4. R43 – R50: Payload identičan payloadu primljenog Echo Request paketa.
 
 ## Scenarij 2 - Nije ICMP Echo poruka (ignorisanje)
 
