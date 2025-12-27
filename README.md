@@ -180,6 +180,13 @@ Modul prima Ethernet okvire bajt-po-bajt, pri čemu se svaki bajt skladišti u i
 
 U slučaju prijema validnog ICMP Echo Request paketa, modul generiše ICMP Echo Reply zamjenom izvorišnih i odredišnih MAC i IP adresa te izmjenom ICMP tipa poruke. Odgovor se šalje sekvencijalno, bajt po bajt, uz poštivanje out_ready signala i pravilno označavanje početka i kraja okvira. Paketi koji ne ispunjavaju uslove validnosti se ignorišu, bez generisanja izlaznog odgovora.
 
+Preglednik stanja (engl. State Machine Viewer) omogućava grafički prikaz stanja konačnog automata implementiranog u okviru ICMPv4 Echo Responder modula, definisanog na osnovu VHDL koda i analiziranog korištenjem alata Intel Quartus Prime. Ovaj alat pruža uvid u stvarnu strukturu FSM-a nakon sinteze, uključujući stanja i prelaze koji upravljaju prijemom, obradom i generisanjem ICMP paketa. Na osnovu prikaza dobijenog u State Machine Viewer-u, koji je prikazan na slici 9, izvršena je verifikacija korektnosti dijagrama konačnih stanja prethodno kreiranog korištenjem alata draw.io.Ovim je potvrđena usklađenost implementiranog FSM-a sa projektovanim ponašanjem ICMPv4 Echo Responder modula.
+
+<div align="center">
+<img src="FSM-draw_io/FSM_diagram.png" alt="ICMP format okvira" width="800">
+<p><strong>Slika 9:</strong> Prikaz verifikacije dijagrama konačnih stanja.</p>
+</div>
+
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
 
 # Zaključak
