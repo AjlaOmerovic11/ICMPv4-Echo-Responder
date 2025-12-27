@@ -183,7 +183,7 @@ U slučaju prijema validnog ICMP Echo Request paketa, modul generiše ICMP Echo 
 Preglednik stanja (engl. State Machine Viewer) omogućava grafički prikaz stanja konačnog automata implementiranog u okviru ICMPv4 Echo Responder modula, definisanog na osnovu VHDL koda i analiziranog korištenjem alata Intel Quartus Prime. Ovaj alat pruža uvid u stvarnu strukturu FSM-a nakon sinteze, uključujući stanja i prelaze koji upravljaju prijemom, obradom i generisanjem ICMP paketa. Na osnovu prikaza dobijenog u State Machine Viewer-u, koji je prikazan na slici 9, izvršena je verifikacija korektnosti dijagrama konačnih stanja prethodno kreiranog korištenjem alata draw.io.Ovim je potvrđena usklađenost implementiranog FSM-a sa projektovanim ponašanjem ICMPv4 Echo Responder modula.
 
 <div align="center">
-<img src="VHDL/ver_dijagram1.png" alt="ICMP format okvira" width="800">
+<img src="VHDL/ver_dijagram1.png" alt="ICMP format okvira" width="900">
 <p><strong>Slika 9:</strong> Prikaz verifikacije dijagrama konačnih stanja.</p>
 </div>
 
