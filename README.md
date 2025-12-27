@@ -174,6 +174,12 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, �
 
 # Modeliranje u VHDL-u
 
+ICMPv4 Echo Responder je realizovan korištenjem jezika za opis hardvera VHDL i zasniva se na konačnom automatu stanja (FSM). Komunikacija sa okruženjem ostvarena je putem Avalon Streaming (Avalon-ST) sučelja, uz korištenje standardnog ready/valid mehanizma za kontrolu protoka podataka.
+
+Modul prima Ethernet okvire bajt-po-bajt, pri čemu se svaki bajt skladišti u interni bafer. Obrada paketa organizovana je kroz FSM stanja koja obuhvataju prijem i provjeru Ethernet, IPv4 i ICMP zaglavlja, kao i prijem korisničkog sadržaja. Validnost paketa se utvrđuje provjerom destinacijske MAC adrese, EtherType polja, IP protokola, destinacijske IP adrese i ICMP tipa poruke.
+
+U slučaju prijema validnog ICMP Echo Request paketa, modul generiše ICMP Echo Reply zamjenom izvorišnih i odredišnih MAC i IP adresa te izmjenom ICMP tipa poruke. Odgovor se šalje sekvencijalno, bajt po bajt, uz poštivanje out_ready signala i pravilno označavanje početka i kraja okvira. Paketi koji ne ispunjavaju uslove validnosti se ignorišu, bez generisanja izlaznog odgovora.
+
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
 
 # Zaključak
