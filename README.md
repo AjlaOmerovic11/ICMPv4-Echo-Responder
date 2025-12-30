@@ -124,7 +124,7 @@ Prijem započinje aktiviranjem signala in_sop u trenutku D1, nakon čega FSM obr
 U ovom scenariju ICMPv4 Echo Responder prima Ethernet okvir sa ispravnom odredišnom MAC adresom. U ovom slučaju, Ethernet zaglavlje se obrađuje. Nakon toga, prelazi u stanje IP_HDR u kojem se obrađuje IPv4 zaglavlje u intervalu D15–D34. IPv4 zaglavlje ima fiksnu dužinu od 20 bajtova i sadrži osnovna kontrolna polja, uključujući izvorišnu i odredišnu IP adresu. Tokom obrade IPv4 zaglavlja vrši se provjera odredišne IP adrese. Ukoliko IP adresa ne odgovara lokalnoj IP adresi ICMPv4 Echo Respondera, paket se odbacuje na mrežnom sloju. FSM zatim prelazi u stanje IGNORE, u kojem se ostatak paketa odbacuje, nema obrade ICMP zaglavlja i ne generiše se ICMP Echo Reply poruka. Po prijemu signala in_eop, FSM se vraća u stanje IDLE.
 
 <div align="center">
-<img src="WaveDrom/sc3_blok2.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/sc2_2wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 6:</strong> Prikaz scenarija 2 u WaveDromu za slučaj pogrešne IP adrese.</p>
 </div>
 
