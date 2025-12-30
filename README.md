@@ -109,7 +109,7 @@ Odredišna MAC adresa, odredišna IP adresa i ICMP Type polje imaju ključnu ulo
 U ovom scenariju ICMPv4 Echo Responder prima ispravan paket koji nije ICMP Echo Request ili nije namijenjen ovom uređaju. Na osnovu analize Ethernet-a, IPv4, MAC adrese i ICMP zaglavlja, paket se ignoriše. U ovom slučaju ne dolazi do generisanja ICMP Echo Reply poruke.
 
 <div align="center">
-<img src="FSM-draw_io/sc3.png" alt="ICMP format okvira" width="500">
+<img src="FSM-draw_io/sc2_1wavedrom.png" alt="ICMP format okvira" width="500">
 <p><strong>Slika 4:</strong> Prikaz protokola ignorisanja paketa koji nije ICMP Echo Request.</p>
 </div>
 
