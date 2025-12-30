@@ -117,7 +117,7 @@ U ovom scenariju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethe
 Prijem započinje aktiviranjem signala in_sop u trenutku D1, nakon čega FSM obrađuje Ethernet zaglavlje u intervalu D1–D14. Bajtovi D1–D6 predstavljaju odredišnu MAC adresu, tokom kojih se detektuje neusklađenost. Iako se greška prepoznaje na početku (D1-D6), modul završava prijem Ethernet zaglavlja, a zatim prelazi u stanje IGNORE i odbacuje ostatak paketa.
 
 <div align="center">
-<img src="WaveDrom/sc2_1wavedrom.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/s2_1wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 5:</strong> Prikaz scenarija 2 u WaveDromu za slučaj pogrešne MAC adrese.</p>
 </div>
 
