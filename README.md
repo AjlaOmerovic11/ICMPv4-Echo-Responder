@@ -132,7 +132,7 @@ U ovom scenariju ICMPv4 Echo Responder ispravno obrađuje Ethernet zaglavlje (D1
 Kada ICMP poruka nije tipa Echo Request ili sadrži neispravne vrijednosti, paket se odbacuje na ICMP nivou. FSM prelazi u stanje IGNORE, u kojem se ostatak paketa odbacuje, bez aktiviranja izlaznih signala i bez generisanja ICMP Echo Reply poruke. Po prijemu signala in_eop, FSM se vraća u stanje IDLE.
 
 <div align="center">
-<img src="WaveDrom/sc3_3wavedrom.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/sc2_3wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 7:</strong> Prikaz scenarija 2 u WaveDromu za slučaj neispravnog ICMP zaglavlja.</p>
 </div>
 
