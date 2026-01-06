@@ -195,6 +195,23 @@ Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz sta
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
 ## Prvi scenario verifikacije 
 
+<div align="center">
+<img src="VHDL/results/rep1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/rep2.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/rep3.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/rep4.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za prvi scenario.</p>
+</div>
+
 ## Drugi scenario verifikacije – pogrešna MAC adresa
 
 U drugom scenariju izvršena je verifikacija rada sklopa u situaciji kada pristigli Ethernet okvir sadrži MAC adresu koja se ne podudara sa adresom definisanom u generičkom parametru modula. Putem ModelSim testbench-a generisana je kompletna sekvenca paketa koja obuhvata Ethernet, IPv4 i ICMP zaglavlje. U simulaciji je namjerno postavljena neispravna odredišna MAC adresa.
@@ -207,7 +224,7 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 
 <div align="center">
 <img src="VHDL/results/mac2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
+<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
 </div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa
@@ -220,7 +237,7 @@ Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ig
 
 <div align="center">
 <img src="VHDL/results/ip2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
+<p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
 </div>
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
@@ -232,7 +249,7 @@ U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet 
 
 <div align="center">
 <img src="VHDL/results/icmp2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
+<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
 </div>
 
 # Zaključak
