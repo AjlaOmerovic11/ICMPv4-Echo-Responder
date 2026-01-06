@@ -199,7 +199,7 @@ Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz sta
 
 U drugom scenariju izvršena je verifikacija rada sklopa u situaciji kada pristigli Ethernet okvir sadrži MAC adresu koja se ne podudara sa adresom definisanom u generičkom parametru modula. Putem ModelSim testbench-a generisana je kompletna sekvenca paketa koja obuhvata Ethernet, IPv4 i ICMP zaglavlje. U simulaciji je namjerno postavljena neispravna odredišna MAC adresa.
 
-Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignoriše pakete koji mu nisu namijenjeni. Rezultati simulacije pokazuju da u slučaju pogrešne MAC adrese signal in_ready ostaje aktivan, ali se ne generiše ICMP Echo Reply odgovor niti dolazi do prelaska automata u stanje slanja izlaznih podataka. Nakon prijema okvira, sklop ostaje u IDLE stanju, što je u skladu sa očekivanom funkcionalnošću. 
+Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignoriše pakete koji mu nisu namijenjeni. Rezultati simulacije pokazuju da u slučaju pogrešne MAC adrese signal in_ready ostaje aktivan, ali se ne generiše ICMP Echo Reply odgovor niti dolazi do prelaska automata u stanje slanja izlaznih podataka. U ovoj situaciji ignoriše se paket i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
 
 <div align="center">
 <img src="VHDL/results/mac1.png" alt="ICMP format okvira" width="900">
@@ -211,9 +211,11 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 </div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa
+U ovom dijelu je izvršena verifikacija rada sklopa za slučaj kada pristigli okvir sadrži pogrešnu odredišnu IP adresu. 
+Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ignoriše paket, ne generiše Echo Reply odgovor i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
-
+U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali je namjerno postavljeno pogrešno ICMP zaglavlje, zbog čega modul icmp_echo_responder takav paket ignoriše, ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
 # Zaključak
 
 ## Literatura
