@@ -214,8 +214,26 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 U ovom dijelu je izvršena verifikacija rada sklopa za slučaj kada pristigli okvir sadrži pogrešnu odredišnu IP adresu. 
 Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ignoriše paket, ne generiše Echo Reply odgovor i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
 
+<div align="center">
+<img src="VHDL/results/ip1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/ip2.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
+</div>
+
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
 U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali sa pogrešnim ICMP zaglavljem. Modul icmp_echo_responder takav paket ignoriše, te ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
+
+<div align="center">
+<img src="VHDL/results/icmp1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/icmp2.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
+</div>
 
 # Zaključak
 
