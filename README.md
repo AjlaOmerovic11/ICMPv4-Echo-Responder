@@ -193,6 +193,13 @@ Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz sta
 </div>
 
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
+## Prvi scenario verifikacije 
+
+## Drugi scenario verifikacije – pogrešna MAC adresa
+
+U drugom scenariju izvršena je verifikacija rada sklopa u situaciji kada pristigli Ethernet okvir sadrži MAC adresu koja se ne podudara sa adresom definisanom u generičkom parametru modula. Putem ModelSim testbench-a generisana je kompletna sekvenca paketa koja obuhvata Ethernet, IPv4 i ICMP zaglavlje. U simulaciji je namjerno postavljena neispravna odredišna MAC adresa.
+
+Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignoriše pakete koji mu nisu namijenjeni. Rezultati simulacije pokazuju da u slučaju pogrešne MAC adrese signal in_ready ostaje aktivan, ali se ne generiše ICMP Echo Reply odgovor niti dolazi do prelaska automata u stanje slanja izlaznih podataka. Nakon prijema okvira, sklop ostaje u IDLE stanju, što je u skladu sa očekivanom funkcionalnošću. 
 
 <div align="center">
 <img src="VHDL/results/mac1.png" alt="ICMP format okvira" width="900">
@@ -203,6 +210,9 @@ Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz sta
 <p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
 </div>
 
+## Drugi scenario verifikacije – pogrešna IP adresa
+
+## Drugi scenario verifikacije – pogrešna ICMP adresa
 
 # Zaključak
 
