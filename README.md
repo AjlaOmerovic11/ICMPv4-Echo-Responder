@@ -195,6 +195,8 @@ Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz sta
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
 ## Prvi scenario verifikacije 
 
+U prvom verifikacionom scenariju testiran je slučaj kada pristigli okvir sadrži ispravnu odredišnu MAC i IP adresu definisanu u generičkim parametrima modula. Cilj je bio potvrditi da modul icmp_echo_responder pravilno parsira ulaz i generiše ICMP Echo Reply odgovor. Simulacija pokazuje korektnu zamjenu izvornih i odredišnih adresa, prelazak stanja iz idle u reply i povratak u idle po završetku prenosa.
+
 <div align="center">
 <img src="VHDL/results/rep1.png" alt="ICMP format okvira" width="900">
 </div>
