@@ -69,25 +69,40 @@ Ovaj scenarij prikazuje razmjenu ICMP Echo Request i ICMP Echo Reply paketa izme
 U ovom scenariju verifikuje se sposobnost ICMPv4 Echo Responder modula da nakon prijema kompletnog ICMP Echo Request paketa, generiše i pošalje odgovarajući ICMP Echo Reply paket. Po detekciji kraja ulaznog paketa (signal in_eop), modul započinje proces formiranja odgovora, pri čemu se zamjenjuju izvorišne i odredišne MAC i IP adrese, dok se ICMP Type polje postavlja na vrijednost Echo Reply (0). Slanje ICMP Echo Reply paketa odvija se bajt po bajt, u kontinuiranom režimu, uz pretpostavku da je izlazni interfejs uvijek spreman za prihvatanje podataka, zbog čega je signal out_ready konstantno aktivan. Tokom cijelog trajanja slanja odgovora signal out_valid je aktivan. Na taj način se označava da su izlazni podaci validni. Signal out_sop označava početak, a signal out_eop kraj Echo Reply paketa.
 
 <div align="center">
-<img src="WaveDrom/sc2_wavedrom.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/sc1_wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 3:</strong> Prikaz scenarija 1 u WaveDromu.</p>
 </div>
 
 U Scenariju 1 ulazni bajtovi D1–D50 imaju sljedeće protokolno značenje:
 
-- D1–D6 (Destination MAC): modul prima i upoređuje Destination MAC adresu sa parametrom MAC_ADDRESS
-- D7–D12 (Source MAC): izvorišna MAC adresa Ethernet okvira
-- D13–D14 (EtherType): vrijednost 0x0800 (IPv4)
-- D15–D34 (IPv4 header): iz IPv4 zaglavlja se provjerava da li je odredišna IP adresa jednaka IP_ADDRESS i da li je Protocol polje postavljeno na ICMP, IP zaglavlje uključuje Src IP, Dest IP i Protocol polje
-- D35–D42 (ICMP header): iz ICMP zaglavlja se detektuje da je Type = 8 (Echo Request), ICMP zaglavlje uključuje Type, Code, Checksum, Identifier i Sequence Number
-- D43–D50 (ICMP payload): podaci ICMP poruke (neobrađeni payload)
+1. D1-D14 (Ethernet header): Ethernet zaglavlje uključuje sljedeća polja:
+  - D1–D6 (Destination MAC): modul prima i upoređuje Destination MAC adresu sa parametrom MAC_ADDRESS,
+  - D7–D12 (Source MAC): izvorišna MAC adresa Ethernet okvira,
+  - D13–D14 (EtherType): vrijednost 0x0800 (IPv4).
+2. D15–D34 (IPv4 header): iz IPv4 zaglavlja se provjerava da li je odredišna IP adresa jednaka IP_ADDRESS i da li je Protocol polje postavljeno na ICMP. IP zaglavlje se može opisati na sljedeći način:
+  - D15: Ovo polje sadrži verziju IP protokola (IPv4) i dužinu zaglavlja,
+  - D16: Označava prioritet i kvalitet servisa (ToS),
+  - D17–D18: Ukupna dužina IP paketa (zaglavlje + payload),
+  - D19–D20: Identifikator fragmentacije,
+  - D21–D22: Polja vezana za fragmentaciju,
+  - D23: Time To Live (TTL) koji ograničava životni vijek paketa u mreži,
+  - D24: Protocol polje IPv4 zaglavlja,
+  - D25-D26: Header Checksum,
+  - D27-D30: Izvorišna IP adresa pošiljaoca,
+  - D31-D34: Odredišna IP adresa IPv4 paketa.
+3. D35–D42 (ICMP header): ICMP zaglavlje ima fiksnu dužinu od 8 bajtova i sastoji se od sljedećih polja:
+  - D35: Type
+  - D36: Code
+  - D37–D38: Checksum
+  - D39–D40: Identifier
+  - D41–D42: Sequence Number
+4. D43–D50 (Payload): predstavlja završni dio okvira i u ovom scenariju se tretira kao niz korisničkih podataka koji se ne obrađuju, već se u potpunosti i neizmijenjeni prenose u odgovor.
 
-
-Nakon prijema posljednjeg bajta (D50), modul započinje generisanje ICMP Echo Reply paketa. Izlazni bajtovi takođe se prenose bajt-po-bajt i imaju sljedeće značenje:
-- R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama
-- R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama
-- R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply)
-- R43 – R50: ICMP payload identičan payloadu primljenog Echo Request paketa
+Odredišna MAC adresa, odredišna IP adresa i ICMP Type polje imaju ključnu ulogu u implementaciji, jer se njihova vrijednost provjerava u VHDL kodu kako bi se obradili samo ICMP Echo Request paketi namijenjeni ovom modulu. Nakon prijema posljednjeg bajta (D50), modul započinje generisanje ICMP Echo Reply paketa. Izlazni bajtovi takođe se prenose bajt-po-bajt i imaju sljedeće značenje:
+1. R1 – R14: Ethernet zaglavlje sa zamijenjenim izvorišnim i odredišnim MAC adresama,
+2. R15 – R34: IPv4 zaglavlje sa zamijenjenim izvorišnim i odredišnim IP adresama,
+3. R35 – R42: ICMP zaglavlje sa poljem Type postavljenim na vrijednost 0 (Echo Reply),
+4. R43 – R50: Payload identičan payloadu primljenog Echo Request paketa.
 
 ## Scenarij 2 - Nije ICMP Echo poruka (ignorisanje)
 
@@ -102,14 +117,14 @@ U ovom scenariju paket se ignoriše zbog neispravne odredišne MAC adrese u Ethe
 Prijem započinje aktiviranjem signala in_sop u trenutku D1, nakon čega FSM obrađuje Ethernet zaglavlje u intervalu D1–D14. Bajtovi D1–D6 predstavljaju odredišnu MAC adresu, tokom kojih se detektuje neusklađenost. Iako se greška prepoznaje na početku (D1-D6), modul završava prijem Ethernet zaglavlja, a zatim prelazi u stanje IGNORE i odbacuje ostatak paketa.
 
 <div align="center">
-<img src="WaveDrom/sc3_bl1.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/s2_1wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 5:</strong> Prikaz scenarija 2 u WaveDromu za slučaj pogrešne MAC adrese.</p>
 </div>
 
 U ovom scenariju ICMPv4 Echo Responder prima Ethernet okvir sa ispravnom odredišnom MAC adresom. U ovom slučaju, Ethernet zaglavlje se obrađuje. Nakon toga, prelazi u stanje IP_HDR u kojem se obrađuje IPv4 zaglavlje u intervalu D15–D34. IPv4 zaglavlje ima fiksnu dužinu od 20 bajtova i sadrži osnovna kontrolna polja, uključujući izvorišnu i odredišnu IP adresu. Tokom obrade IPv4 zaglavlja vrši se provjera odredišne IP adrese. Ukoliko IP adresa ne odgovara lokalnoj IP adresi ICMPv4 Echo Respondera, paket se odbacuje na mrežnom sloju. FSM zatim prelazi u stanje IGNORE, u kojem se ostatak paketa odbacuje, nema obrade ICMP zaglavlja i ne generiše se ICMP Echo Reply poruka. Po prijemu signala in_eop, FSM se vraća u stanje IDLE.
 
 <div align="center">
-<img src="WaveDrom/sc3_blok2.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/sc2_2wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 6:</strong> Prikaz scenarija 2 u WaveDromu za slučaj pogrešne IP adrese.</p>
 </div>
 
@@ -117,7 +132,7 @@ U ovom scenariju ICMPv4 Echo Responder ispravno obrađuje Ethernet zaglavlje (D1
 Kada ICMP poruka nije tipa Echo Request ili sadrži neispravne vrijednosti, paket se odbacuje na ICMP nivou. FSM prelazi u stanje IGNORE, u kojem se ostatak paketa odbacuje, bez aktiviranja izlaznih signala i bez generisanja ICMP Echo Reply poruke. Po prijemu signala in_eop, FSM se vraća u stanje IDLE.
 
 <div align="center">
-<img src="WaveDrom/sc3_blok3.png" alt="ICMP format okvira" width="1000">
+<img src="WaveDrom/sc2_3wavedrom.png" alt="ICMP format okvira" width="1000">
 <p><strong>Slika 7:</strong> Prikaz scenarija 2 u WaveDromu za slučaj neispravnog ICMP zaglavlja.</p>
 </div>
 
@@ -159,7 +174,48 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, �
 
 # Modeliranje u VHDL-u
 
+ICMPv4 Echo Responder je realizovan korištenjem jezika za opis hardvera VHDL i zasniva se na konačnom automatu stanja (FSM). Komunikacija sa okruženjem ostvarena je putem Avalon Streaming (Avalon-ST) sučelja, uz korištenje standardnog ready/valid mehanizma za kontrolu protoka podataka.
+
+Modul prima Ethernet okvire bajt-po-bajt, pri čemu se svaki bajt skladišti u interni bafer. Obrada paketa organizovana je kroz FSM stanja koja obuhvataju prijem i provjeru Ethernet, IPv4 i ICMP zaglavlja, kao i prijem korisničkog sadržaja. Validnost paketa se utvrđuje provjerom destinacijske MAC adrese, EtherType polja, IP protokola, destinacijske IP adrese i ICMP tipa poruke.
+
+U slučaju prijema validnog ICMP Echo Request paketa, modul generiše ICMP Echo Reply zamjenom izvorišnih i odredišnih MAC i IP adresa te izmjenom ICMP tipa poruke. Odgovor se šalje sekvencijalno, bajt po bajt, uz poštivanje out_ready signala i pravilno označavanje početka i kraja okvira. Paketi koji ne ispunjavaju uslove validnosti se ignorišu, bez generisanja izlaznog odgovora. 
+
+<div align="center">
+<img src="VHDL/results/compilation_report.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 9:</strong> Prikaz kompilacije dizajna (engl. compilation report).</p>
+</div>
+
+Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz stanja konačnog automata implementiranog u okviru ICMPv4 Echo Responder modula, definisanog na osnovu VHDL koda i analiziranog korištenjem alata Intel Quartus Prime. Ovaj alat pruža uvid u stvarnu strukturu FSM-a nakon sinteze, uključujući stanja i prelaze koji upravljaju prijemom, obradom i generisanjem ICMP paketa. Na osnovu prikaza dobijenog u State Machine Viewer-u, koji je prikazan na slici 9, izvršena je verifikacija korektnosti dijagrama konačnih stanja prethodno kreiranog korištenjem alata draw.io. Ovim je potvrđena usklađenost implementiranog FSM-a sa projektovanim ponašanjem ICMPv4 Echo Responder modula.
+
+<div align="center">
+<img src="VHDL/results/ver_dijagram1.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 10:</strong> Prikaz verifikacije dijagrama konačnih stanja.</p>
+</div>
+
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
+## Prvi scenario verifikacije 
+
+## Drugi scenario verifikacije – pogrešna MAC adresa
+
+U drugom scenariju izvršena je verifikacija rada sklopa u situaciji kada pristigli Ethernet okvir sadrži MAC adresu koja se ne podudara sa adresom definisanom u generičkom parametru modula. Putem ModelSim testbench-a generisana je kompletna sekvenca paketa koja obuhvata Ethernet, IPv4 i ICMP zaglavlje. U simulaciji je namjerno postavljena neispravna odredišna MAC adresa.
+
+Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignoriše pakete koji mu nisu namijenjeni. Rezultati simulacije pokazuju da u slučaju pogrešne MAC adrese signal in_ready ostaje aktivan, ali se ne generiše ICMP Echo Reply odgovor niti dolazi do prelaska automata u stanje slanja izlaznih podataka. U ovoj situaciji ignoriše se paket i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
+
+<div align="center">
+<img src="VHDL/results/mac1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/mac2.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
+</div>
+
+## Drugi scenario verifikacije – pogrešna IP adresa
+U ovom dijelu je izvršena verifikacija rada sklopa za slučaj kada pristigli okvir sadrži pogrešnu odredišnu IP adresu. 
+Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ignoriše paket, ne generiše Echo Reply odgovor i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
+
+## Drugi scenario verifikacije – neispravno ICMP zaglavlje
+U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali sa pogrešnim ICMP zaglavljem. Modul icmp_echo_responder takav paket ignoriše, te ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
 
 # Zaključak
 
