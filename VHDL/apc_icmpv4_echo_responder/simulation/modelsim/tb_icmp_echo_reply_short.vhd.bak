@@ -1,0 +1,169 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+ENTITY tb_icmp_echo_reply IS
+END ENTITY;
+
+ARCHITECTURE behavior OF tb_icmp_echo_reply IS
+
+  ------------------------------------------------------------------
+  -- DUT declaration
+  ------------------------------------------------------------------
+  COMPONENT icmp_echo_responder
+    GENERIC (
+      IP_ADDRESS  : STD_LOGIC_VECTOR(31 DOWNTO 0) := x"C0A80164"; -- 192.168.1.100
+      MAC_ADDRESS : STD_LOGIC_VECTOR(47 DOWNTO 0) := x"020000000001"
+    );
+    PORT (
+      clock     : IN  STD_LOGIC;
+      reset     : IN  STD_LOGIC;
+
+      in_data   : IN  STD_LOGIC_VECTOR(7 DOWNTO 0);
+      in_valid  : IN  STD_LOGIC;
+      in_sop    : IN  STD_LOGIC;
+      in_eop    : IN  STD_LOGIC;
+      in_ready  : OUT STD_LOGIC;
+
+      out_data  : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+      out_valid : OUT STD_LOGIC;
+      out_sop   : OUT STD_LOGIC;
+      out_eop   : OUT STD_LOGIC;
+      out_ready : IN  STD_LOGIC
+    );
+  END COMPONENT;
+
+  ------------------------------------------------------------------
+  -- Signals
+  ------------------------------------------------------------------
+  SIGNAL clock     : STD_LOGIC := '0';
+  SIGNAL reset     : STD_LOGIC := '0';
+
+  SIGNAL in_data   : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
+  SIGNAL in_valid  : STD_LOGIC := '0';
+  SIGNAL in_sop    : STD_LOGIC := '0';
+  SIGNAL in_eop    : STD_LOGIC := '0';
+  SIGNAL in_ready  : STD_LOGIC;
+
+  SIGNAL out_data  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+  SIGNAL out_valid : STD_LOGIC;
+  SIGNAL out_sop   : STD_LOGIC;
+  SIGNAL out_eop   : STD_LOGIC;
+  SIGNAL out_ready : STD_LOGIC := '1';
+
+  CONSTANT clk_period : TIME := 10 ns;
+
+BEGIN
+
+  ------------------------------------------------------------------
+  -- DUT instantiation
+  ------------------------------------------------------------------
+  uut : icmp_echo_responder
+    PORT MAP (
+      clock     => clock,
+      reset     => reset,
+      in_data   => in_data,
+      in_valid  => in_valid,
+      in_sop    => in_sop,
+      in_eop    => in_eop,
+      in_ready  => in_ready,
+      out_data  => out_data,
+      out_valid => out_valid,
+      out_sop   => out_sop,
+      out_eop   => out_eop,
+      out_ready => out_ready
+    );
+
+  ------------------------------------------------------------------
+  -- Clock generator
+  ------------------------------------------------------------------
+  clk_process : PROCESS
+  BEGIN
+    clock <= '0';
+    WAIT FOR clk_period/2;
+    clock <= '1';
+    WAIT FOR clk_period/2;
+  END PROCESS;
+
+  ------------------------------------------------------------------
+  -- Stimulus process ? SCENARIJ 1
+  ------------------------------------------------------------------
+  stim_proc : PROCESS
+    TYPE packet_type IS ARRAY (0 TO 49) OF STD_LOGIC_VECTOR(7 DOWNTO 0);
+
+    VARIABLE icmp_frame : packet_type := (
+      -- Ethernet header
+      X"02", X"00", X"00", X"00", X"00", X"01",   -- Dest MAC
+      X"AA", X"BB", X"CC", X"DD", X"EE", X"FF",   -- Src MAC
+      X"08", X"00",                               -- EtherType IPv4
+
+      -- IPv4 header
+      X"45", X"00", X"00", X"24",
+      X"00", X"01", X"00", X"00",
+      X"40", X"01", X"00", X"00",
+      X"C0", X"A8", X"01", X"01",                 -- Src IP
+      X"C0", X"A8", X"01", X"64",                 -- Dst IP
+
+      -- ICMP Echo Request
+      X"08", X"00", X"00", X"00",
+      X"12", X"34", X"00", X"01",
+
+      -- Payload (8 B)
+      X"DE", X"AD", X"BE", X"EF",
+      X"CA", X"FE", X"BA", X"BE"
+    );
+
+    VARIABLE idx : INTEGER := 0;
+  BEGIN
+
+    ----------------------------------------------------------------
+    -- RESET
+    ----------------------------------------------------------------
+    reset <= '1';
+    WAIT UNTIL rising_edge(clock);
+    WAIT UNTIL rising_edge(clock);
+    reset <= '0';
+
+    ----------------------------------------------------------------
+    -- IDLE
+    ----------------------------------------------------------------
+    in_valid <= '0';
+    in_data  <= X"00";
+    WAIT UNTIL rising_edge(clock);
+
+    ----------------------------------------------------------------
+    -- SEND ICMP PACKET (1 byte = 1 clock)
+    ----------------------------------------------------------------
+    in_valid <= '1';
+
+    WHILE idx <= 49 LOOP
+      in_data <= icmp_frame(idx);
+
+      IF idx = 0 THEN
+        in_sop <= '1';
+      ELSE
+        in_sop <= '0';
+      END IF;
+
+      IF idx = 49 THEN
+        in_eop <= '1';
+      ELSE
+        in_eop <= '0';
+      END IF;
+
+      WAIT UNTIL rising_edge(clock);
+      idx := idx + 1;
+    END LOOP;
+
+    ----------------------------------------------------------------
+    -- BACK TO IDLE
+    ----------------------------------------------------------------
+    in_valid <= '0';
+    in_sop   <= '0';
+    in_eop   <= '0';
+    in_data  <= X"00";
+
+    WAIT;
+  END PROCESS;
+
+END ARCHITECTURE behavior;
