@@ -212,7 +212,7 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 
 ## Drugi scenario verifikacije – pogrešna IP adresa
 
-## Drugi scenario verifikacije – pogrešna ICMP adresa
+## Drugi scenario verifikacije – neispravno ICMP zaglavlje
 
 # Zaključak
 
