@@ -215,7 +215,8 @@ U ovom dijelu je izvršena verifikacija rada sklopa za slučaj kada pristigli ok
 Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ignoriše paket, ne generiše Echo Reply odgovor i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
-U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali je namjerno postavljeno pogrešno ICMP zaglavlje, zbog čega modul icmp_echo_responder takav paket ignoriše, ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
+U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali sa pogrešnim ICMP zaglavljem. Modul icmp_echo_responder takav paket ignoriše, te ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
+
 # Zaključak
 
 ## Literatura
