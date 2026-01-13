@@ -168,7 +168,7 @@ FSM ostaje u SEND dok nisu poslani svi bajtovi ili dok interfejs nije spreman, Ä
 
 
 <div align="center">
-<img src="FSM-draw_io/FSM_diagram.png" alt="ICMP format okvira" width="800">
+<img src="FSM-draw_io/fsm_novo.png" alt="ICMP format okvira" width="800">
 <p><strong>Slika 8:</strong> Prikaz FSM dijagrama pomoÄ‡u alata draw.io.</p>
 </div>
 
