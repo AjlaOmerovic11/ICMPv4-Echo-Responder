@@ -1,0 +1,151 @@
+# Reading C:/Users/Dino/Downloads/intelFPGA_lite/19.1/modelsim_ase/tcl/vsim/pref.tcl
+# do icmp_echo_responder_run_msim_rtl_vhdl.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Copying C:/Users/Dino/Downloads/intelFPGA_lite/19.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/icmp_echo_responder.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:31:40 on Jan 19,2026
+# vcom -reportprogress 300 -93 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/icmp_echo_responder.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity icmp_echo_responder
+# -- Compiling architecture rtl of icmp_echo_responder
+# End time: 15:31:40 on Jan 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+vcom -reportprogress 300 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore_ready_valid.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:31:57 on Jan 19,2026
+# vcom -reportprogress 300 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore_ready_valid.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity tb_icmp_echo_mac_ignore_ready_valid
+# -- Compiling architecture behavior of tb_icmp_echo_mac_ignore_ready_valid
+# End time: 15:31:57 on Jan 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Load canceled
+vsim -gui -l msim_transcript work.tb_icmp_echo_mac_ignore_ready_valid
+# vsim -gui -l msim_transcript work.tb_icmp_echo_mac_ignore_ready_valid 
+# Start time: 15:32:36 on Jan 19,2026
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb_icmp_echo_mac_ignore_ready_valid(behavior)
+# Loading work.icmp_echo_responder(rtl)
+add wave -position insertpoint  \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/clk_period \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/clock \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/in_data \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/in_eop \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/in_ready \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/in_sop \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/in_valid \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/out_data \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/out_eop \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/out_ready \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/out_sop \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/out_valid \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/reset \
+sim:/tb_icmp_echo_mac_ignore_ready_valid/tb_state
+run
+vcom -reportprogress 300 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore_ready_valid.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:45:57 on Jan 19,2026
+# vcom -reportprogress 300 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore_ready_valid.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity tb_icmp_echo_ip_ignore_ready_valid
+# -- Compiling architecture behavior of tb_icmp_echo_ip_ignore_ready_valid
+# End time: 15:45:57 on Jan 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# internal error on MenuItemCan
+# m is .mBar.file label is Save Transcript As... state is disabled
+#  Trace back: 
+#    <4:eval:1: ::Vsimmenu::MenuItemCan .mBar.file {Save Transcript As...} disabled
+#    <3:proc:2: ::QObjects::Action .main_pane.objects SetMenuState {{can_open {::Vsimmenu::MenuItemCan .mBar.file Open...}} {can_close_file {::Vsimmenu::MenuItemCan .mBar.file Close}} {can_save {::Vsimmenu::MenuItemCan .mBar.file {Save Transcript}}} {can_saveas {::Vsimmenu::MenuItemCan .mBar.file {Save Transcript As...}}} {can_report {::Vsimmenu::MenuItemCan .mBar.file Report...}} {can_use_source_file {::Vsimmenu::MenuItemCan .mBar.file {Use Source...}}} {can_environment {::Vsimmenu::MenuItemCan .mBar.file Environment}} {can_page_setup {::Vsimmenu::MenuItemCan .mBar.file {Page Setup...}}} {can_print {::Vsimmenu::MenuItemCan .mBar.file Print...}} {can_print_postscript {::Vsimmenu::MenuItemCan .mBar.file {Print Postscript...}}} {can_close_window {::Vsimmenu::MenuItemCan .mBar.file {Close Window}}}}
+#    >2:proc:391: ::.vcop Action SetMenuState {{can_open {::Vsimmenu::MenuItemCan .mBar.file Open...}} {can_close_file {::Vsimmenu::MenuItemCan .mBar.file Close}} {can_save {::Vsimmenu::MenuItemCan .mBar.file {Save Transcript}}} {can_saveas {::Vsimmenu::MenuItemCan .mBar.file {Save Transcript As...}}} {can_report {::Vsimmenu::MenuItemCan .mBar.file Report...}} {can_use_source_file {::Vsimmenu::MenuItemCan .mBar.file {Use Source...}}} {can_environment {::Vsimmenu::MenuItemCan .mBar.file Environment}} {can_page_setup {::Vsimmenu::MenuItemCan .mBar.file {Page Setup...}}} {can_print {::Vsimmenu::MenuItemCan .mBar.file Print...}} {can_print_postscript {::Vsimmenu::MenuItemCan .mBar.file {Print Postscript...}}} {can_close_window {::Vsimmenu::MenuItemCan .mBar.file {Close Window}}}}
+#    <1:eval:1: ::Vsimmenu::DefaultMenuPostCmd .mBar.file {FileMenuPostCmd .mBar.file} SetMenuState
+vsim -gui -l msim_transcript work.tb_icmp_echo_ip_ignore_ready_valid
+# End time: 15:46:23 on Jan 19,2026, Elapsed time: 0:13:47
+# Errors: 0, Warnings: 0
+# vsim -gui -l msim_transcript work.tb_icmp_echo_ip_ignore_ready_valid 
+# Start time: 15:46:23 on Jan 19,2026
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb_icmp_echo_ip_ignore_ready_valid(behavior)
+# Loading work.icmp_echo_responder(rtl)
+add wave -position insertpoint  \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/clk_period \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/clock \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/in_data \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/in_eop \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/in_ready \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/in_sop \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/in_valid \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/out_data \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/out_eop \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/out_ready \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/out_sop \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/out_valid \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/reset \
+sim:/tb_icmp_echo_ip_ignore_ready_valid/tb_state
+run
+quit -sim
+# End time: 16:00:25 on Jan 19,2026, Elapsed time: 0:14:02
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore_ready_valid.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 16:00:43 on Jan 19,2026
+# vcom -reportprogress 300 -work work C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore_ready_valid.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity tb_icmp_echo_icmp_ignore_ready_valid
+# -- Compiling architecture behavior of tb_icmp_echo_icmp_ignore_ready_valid
+# End time: 16:00:43 on Jan 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim -gui -l msim_transcript work.tb_icmp_echo_icmp_ignore_ready_valid
+# vsim -gui -l msim_transcript work.tb_icmp_echo_icmp_ignore_ready_valid 
+# Start time: 16:00:58 on Jan 19,2026
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb_icmp_echo_icmp_ignore_ready_valid(behavior)
+# Loading work.icmp_echo_responder(rtl)
+add wave -position insertpoint  \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/clk_period \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/clock \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/in_data \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/in_eop \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/in_ready \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/in_sop \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/in_valid \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/out_data \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/out_eop \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/out_ready \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/out_sop \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/out_valid \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/reset \
+sim:/tb_icmp_echo_icmp_ignore_ready_valid/tb_state
+run
+# End time: 16:05:29 on Jan 19,2026, Elapsed time: 0:04:31
+# Errors: 0, Warnings: 0

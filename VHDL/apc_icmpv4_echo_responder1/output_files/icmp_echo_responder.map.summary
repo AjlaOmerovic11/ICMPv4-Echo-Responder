@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Mon Jan 19 14:23:20 2026
+Quartus Prime Version : 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+Revision Name : icmp_echo_responder
+Top-level Entity Name : icmp_echo_responder
+Family : Cyclone IV E
+Total logic elements : 1,221
+    Total combinational functions : 429
+    Dedicated logic registers : 812
+Total registers : 812
+Total pins : 26
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
