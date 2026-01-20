@@ -214,6 +214,32 @@ U prvom verifikacionom scenariju testiran je slučaj kada pristigli okvir sadrž
 <p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za prvi scenario.</p>
 </div>
 
+## Prvi scenario verifikacije - testiranje ready/valid handshake mehanizma
+
+<div align="center">
+<img src="VHDL/results/h_rep1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_rep2.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_rep3.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_rep4.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za prvi scenario.</p>
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_rep5.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za ready/valid handshake scenario.</p>
+</div>
+
+
+
 ## Drugi scenario verifikacije – pogrešna MAC adresa
 
 U drugom scenariju izvršena je verifikacija rada sklopa u situaciji kada pristigli Ethernet okvir sadrži MAC adresu koja se ne podudara sa adresom definisanom u generičkom parametru modula. Putem ModelSim testbench-a generisana je kompletna sekvenca paketa koja obuhvata Ethernet, IPv4 i ICMP zaglavlje. U simulaciji je namjerno postavljena neispravna odredišna MAC adresa.
@@ -229,6 +255,17 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 <p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
 </div>
 
+## Drugi scenario verifikacije – pogrešna MAC adresa (ready/valid handshake)
+
+<div align="center">
+<img src="VHDL/results/h_mac1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_mac2.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese i ready/valid handshake mehanizma.</p>
+</div>
+
 ## Drugi scenario verifikacije – pogrešna IP adresa
 U ovom dijelu je izvršena verifikacija rada sklopa za slučaj kada pristigli okvir sadrži pogrešnu odredišnu IP adresu. 
 Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ignoriše paket, ne generiše Echo Reply odgovor i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
@@ -242,6 +279,21 @@ Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ig
 <p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
 </div>
 
+## Drugi scenario verifikacije – pogrešna IP adresa (ready/valid handshake)
+
+<div align="center">
+<img src="VHDL/results/h_ip1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_ip2.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_ip3.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese i ready/valid handshake mehanizma.</p>
+</div>
+
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
 U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali sa pogrešnim ICMP zaglavljem. Modul icmp_echo_responder takav paket ignoriše, te ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
 
@@ -252,6 +304,21 @@ U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet 
 <div align="center">
 <img src="VHDL/results/icmp2.png" alt="ICMP format okvira" width="900">
 <p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
+</div>
+
+## Drugi scenario verifikacije – neispravno ICMP zaglavlje (ready/valid handshake)
+
+<div align="center">
+<img src="VHDL/results/h_icmp1.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_icmp2.png" alt="ICMP format okvira" width="900">
+</div>
+
+<div align="center">
+<img src="VHDL/results/h_icmp3.png" alt="ICMP format okvira" width="900">
+<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja i ready/valid handshake mehanizma.</p>
 </div>
 
 # Zaključak
