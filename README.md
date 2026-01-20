@@ -216,6 +216,11 @@ U prvom verifikacionom scenariju testiran je slučaj kada pristigli okvir sadrž
 
 ## Prvi scenario verifikacije - testiranje ready/valid handshake mehanizma
 
+U ovom verifikacionom scenariju provjeren je ispravan rad modula icmp_echo_responder prilikom prijema validne ICMPv4 Echo Request poruke, uz poseban naglasak na korektnu implementaciju ready/valid handshake mehanizma na ulaznom i izlaznom interfejsu.
+Pristigli Ethernet okvir sadrži ispravne odredišne MAC i IPv4 adrese definisane generičkim parametrima modula. Nakon uspješnog parsiranja Ethernet i IPv4 zaglavlja, modul prepoznaje ICMP Echo Request poruku i započinje generisanje ICMP Echo Reply odgovora. Tokom ovog procesa izvršena je pravilna zamjena izvornih i odredišnih MAC i IP adresa.
+Paralelno sa funkcionalnom verifikacijom, testirano je i ponašanje ready/valid handshake mehanizma. Ulazni podaci se prihvataju isključivo u trenucima kada je signal in_ready aktivan, dok se u periodima njegove deaktivacije prenos podataka privremeno zaustavlja bez gubitka ili narušavanja integriteta podataka. Na izlaznoj strani, ICMP Echo Reply paketi se emituju samo kada je prijemna strana spremna (out_ready = '1'), čime se obezbjeđuje kontrolisan i pouzdan tok podataka.
+Rezultati simulacije u ModelSim okruženju potvrđuju da modul pravilno poštuje ready/valid protokol sinhronizacije, kako tokom normalnog rada, tako i u uslovima privremenih zastoja u komunikaciji. Po završetku slanja ICMP Echo Reply paketa, modul se ispravno vraća u početno stanje, spreman za obradu narednih Ethernet okvira.
+
 <div align="center">
 <img src="VHDL/results/h_rep1.png" alt="ICMP format okvira" width="900">
 </div>
