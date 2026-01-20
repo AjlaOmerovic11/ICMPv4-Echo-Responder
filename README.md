@@ -261,6 +261,10 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 
 ## Drugi scenario verifikacije – pogrešna MAC adresa (ready/valid handshake)
 
+U ovom scenariju testiran je rad modula icmp_echo_responder u slučaju kada pristigli Ethernet okvir sadrži neispravnu odredišnu MAC adresu, koja se ne podudara sa MAC adresom definisanom generičkim parametrom modula. Cilj scenarija je potvrditi da se paket pravilno ignoriše (ne generiše se ICMP Echo Reply), kao i da modul korektno implementira ready/valid handshake mehanizam u režimu odbacivanja paketa.
+Tokom prijema okvira, ulazni bajtovi se prihvataju isključivo kada su in_valid i in_ready istovremeno aktivni. U periodima kada je in_ready = '0', modul pauzira prijem bez gubitka podataka. Nastavak parsiranja se vrši tek nakon ponovne aktivacije in_ready. Nakon analize Ethernet zaglavlja i detekcije pogrešne MAC adrese, modul prelazi u stanje IGNORE, gdje nastavlja da propušta ostatak ulaznog okvira do in_eop, bez pokretanja generisanja odgovora.
+Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktivan, nezavisno od stanja signala out_ready, čime se potvrđuje da modul ne šalje nikakve podatke za pakete koji mu nisu namijenjeni.
+
 <div align="center">
 <img src="VHDL/results/h_mac1.png" alt="ICMP format okvira" width="900">
 </div>
@@ -284,6 +288,11 @@ Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ig
 </div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa (ready/valid handshake)
+
+U ovom scenariju testiran je rad modula icmp_echo_responder u slučaju kada pristigli Ethernet okvir sadrži neispravnu odredišnu IP adresu, koja se ne podudara sa IP adresom definisanom generičkim parametrom modula. Cilj scenarija je potvrditi da se paket pravilno ignoriše (ne generiše se ICMP Echo Reply), kao i da modul korektno implementira ready/valid handshake mehanizam u režimu odbacivanja paketa.
+Tokom prijema okvira, ulazni bajtovi se prihvataju isključivo kada su signali in_valid i in_ready istovremeno aktivni. U periodima kada je in_ready = '0', modul pauzira prijem bez gubitka podataka, a nastavak parsiranja se vrši tek nakon ponovne aktivacije signala in_ready. Time je obezbijeđena ispravna sinhronizacija prijema podataka u skladu sa ready/valid protokolom.
+Nakon analize Ethernet i IPv4 zaglavlja i detekcije pogrešne odredišne IP adrese, modul prelazi u stanje IGNORE, u kojem nastavlja da prihvata ostatak ulaznog okvira do signala in_eop, bez pokretanja procesa generisanja ICMP Echo Reply odgovora.
+Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktivan, nezavisno od stanja signala out_ready, čime se potvrđuje da modul ne generiše izlazne podatke za pakete koji mu nisu namijenjeni.
 
 <div align="center">
 <img src="VHDL/results/h_ip1.png" alt="ICMP format okvira" width="900">
@@ -311,6 +320,11 @@ U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet 
 </div>
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje (ready/valid handshake)
+
+U ovom scenariju testiran je rad modula icmp_echo_responder u slučaju kada pristigli paket sadrži neispravno ICMP zaglavlje, odnosno ICMP poruku koja nije tipa Echo Request ili ne ispunjava očekivani format. Cilj scenarija je potvrditi da se paket pravilno ignoriše, kao i da modul zadrži korektno ponašanje ready/valid handshake mehanizma tokom odbacivanja paketa.
+Tokom prijema okvira, ulazni bajtovi se prihvataju isključivo u ciklusima kada su signali in_valid i in_ready istovremeno aktivni. U slučaju privremene deaktivacije signala in_ready, prijem podataka se pauzira bez narušavanja integriteta ulaznog toka, a obrada se nastavlja po ponovnoj aktivaciji signala in_ready.
+Nakon obrade Ethernet i IPv4 zaglavlja, te detekcije neispravnog ICMP zaglavlja, modul prelazi u stanje IGNORE, gdje nastavlja prihvat preostalih bajtova ulaznog okvira do signala in_eop, bez generisanja ICMP Echo Reply poruke.
+Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktivan bez obzira na stanje signala out_ready, čime se potvrđuje da modul ne emituje nikakve izlazne podatke za pakete sa neispravnim ICMP zaglavljem.
 
 <div align="center">
 <img src="VHDL/results/h_icmp1.png" alt="ICMP format okvira" width="900">
