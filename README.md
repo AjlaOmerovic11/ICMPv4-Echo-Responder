@@ -230,12 +230,11 @@ U prvom verifikacionom scenariju testiran je slučaj kada pristigli okvir sadrž
 
 <div align="center">
 <img src="VHDL/results/h_rep4.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za prvi scenario.</p>
 </div>
 
 <div align="center">
 <img src="VHDL/results/h_rep5.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 11:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za ready/valid handshake scenario.</p>
+<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za ready/valid handshake scenario.</p>
 </div>
 
 
@@ -252,7 +251,7 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 
 <div align="center">
 <img src="VHDL/results/mac2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
+<p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
 </div>
 
 ## Drugi scenario verifikacije – pogrešna MAC adresa (ready/valid handshake)
@@ -263,7 +262,7 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 
 <div align="center">
 <img src="VHDL/results/h_mac2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese i ready/valid handshake mehanizma.</p>
+<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese i ready/valid handshake mehanizma.</p>
 </div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa
@@ -276,7 +275,7 @@ Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ig
 
 <div align="center">
 <img src="VHDL/results/ip2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
+<p><strong>Slika 15:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
 </div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa (ready/valid handshake)
@@ -291,7 +290,7 @@ Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ig
 
 <div align="center">
 <img src="VHDL/results/h_ip3.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese i ready/valid handshake mehanizma.</p>
+<p><strong>Slika 16:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese i ready/valid handshake mehanizma.</p>
 </div>
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
@@ -303,7 +302,7 @@ U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet 
 
 <div align="center">
 <img src="VHDL/results/icmp2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
+<p><strong>Slika 17:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
 </div>
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje (ready/valid handshake)
@@ -318,7 +317,7 @@ U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet 
 
 <div align="center">
 <img src="VHDL/results/h_icmp3.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja i ready/valid handshake mehanizma.</p>
+<p><strong>Slika 18:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja i ready/valid handshake mehanizma.</p>
 </div>
 
 # Zaključak
