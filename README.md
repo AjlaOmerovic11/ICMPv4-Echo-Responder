@@ -149,18 +149,19 @@ Prelazak u stanje ETHERNET_HEADER dešava se kada su in_valid = '1' i in_sop = '
   
 3. ETHERNET_HEADER – U ovom stanju FSM obrađuje Ethernet zaglavlje paketa. Tokom prijema bajtova provjerava se:
 - da li je Ethernet tip jednak 0x0800, čime se potvrđuje da se radi o IPv4 paketu.
-Ako uslov nije ispunjen, FSM prelazi u stanje IGNORE. Ako je Ethernet tip validan, nakon završetka obrade Ethernet zaglavlja FSM prelazi u stanje IP_HEADER.
-Ukoliko bilo koji od navedenih uslova nije ispunjen, automat zaključuje da paket nije relevantan za ICMP Echo Responder i prelazi u stanje IGNORE. Ako su svi uslovi ispunjeni, automat prelazi u stanje IP_HEADER. 
+  
+Ako uslov nije ispunjen, FSM prelazi u stanje IGNORE. Ako je Ethernet tip validan, nakon završetka obrade Ethernet zaglavlja FSM prelazi u stanje IP_HEADER. 
 
 3. IP_HEADER - U stanju IP_HEADER vrši se parsiranje IPv4 zaglavlja. FSM provjerava:
 - da li je polje Protocol jednako 1, čime se potvrđuje da se radi o ICMP paketu.
+  
 Ukoliko uslov nije ispunjen, paket se odbacuje prelaskom u stanje IGNORE. Ako je protokol ispravan, FSM prelazi u stanje ICMP_HEADER.
 
 4. ICMP_HEADER - U ovom stanju FSM obrađuje ICMP zaglavlje paketa. Provjerava se vrijednost polja ICMP Type:
-- ako je ICMP_type = 8 (Echo Request), FSM prelazi u stanje PAYLOAD,
+- ako je ICMP_type = 8 (Echo Request), onda FSM prelazi u stanje PAYLOAD,
 - ako je vrijednost različita od 8, paket se smatra nevalidnim i FSM prelazi u stanje IGNORE.
   
-5. PAYLOAD - U stanju PAYLOAD FSM prima ICMP payload bajt-po-bajt, pri čemu je in_ready = '1'. Svi primljeni bajtovi se sukcesivno pohranjuju u interni buffer uz inkrement internog brojača bajtova. FSM ostaje u ovom stanju sve dok se ne detektuje signal in_eop = '1', koji označava kraj paketa. Nakon prijema posljednjeg bajta payload-a, FSM prelazi u stanje SEND.
+5. PAYLOAD - U stanju PAYLOAD FSM prima ICMP payload bajt-po-bajt, pri čemu je signal in_ready = '1'. Svaki primljeni bajt se redom smješta u odgovarajuću lokaciju internog buffera, čime se obezbjeđuje ispravan raspored i kontinuitet podataka. FSM ostaje u ovom stanju sve dok se ne detektuje signal in_eop = '1', koji označava kraj paketa. Nakon prijema posljednjeg bajta payload-a, FSM prelazi u stanje SEND.
 
 6. SEND - U stanju SEND modul generiše i šalje ICMP Echo Reply paket. Slanje se vrši bajt-po-bajt putem izlaznog Avalon-ST interfejsa uz aktivan signal out_valid. Prijenos podataka se odvija isključivo kada je out_ready = '1', čime se poštuje ready/valid mehanizam.
 Prvi bajt odgovora označen je signalom out_sop = '1', dok je posljednji bajt označen signalom out_eop = '1'. Nakon uspješnog slanja kompletnog paketa, FSM se vraća u stanje IDLE i spreman je za prijem novog paketa.
