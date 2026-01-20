@@ -195,7 +195,7 @@ Preglednik stanja (engl. *State Machine Viewer*) omogućava grafički prikaz sta
 # Verifikacija rezultata pomoću simulacijskog alata ModelSim
 ## Prvi scenario verifikacije 
 
-U prvom verifikacionom scenariju testiran je slučaj kada pristigli okvir sadrži ispravnu odredišnu MAC i IP adresu definisanu u generičkim parametrima modula. Cilj je bio potvrditi da modul icmp_echo_responder pravilno parsira ulaz i generiše ICMP Echo Reply odgovor. Simulacija pokazuje korektnu zamjenu izvornih i odredišnih adresa, prelazak stanja iz idle u reply i povratak u idle po završetku prenosa.
+U prvom verifikacionom scenariju testiran je slučaj kada pristigli okvir sadrži ispravnu odredišnu MAC i IP adresu definisanu u generičkim parametrima modula. Cilj je bio potvrditi da modul icmp_echo_responder pravilno parsira ulaz i generiše ICMP Echo Reply odgovor. Simulacija pokazuje korektnu zamjenu izvornih i odredišnih adresa, prelazak stanja iz IDLE u REPLY i povratak u IDLE po završetku prenosa.
 
 <div align="center">
 <img src="VHDL/results/rep1.png" alt="ICMP format okvira" width="900">
@@ -275,8 +275,9 @@ Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktiva
 </div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa
-U ovom dijelu je izvršena verifikacija rada sklopa za slučaj kada pristigli okvir sadrži pogrešnu odredišnu IP adresu. 
-Rezultati ModelSim simulacije pokazuju da icmp_echo_responder u toj situaciji ignoriše paket, ne generiše Echo Reply odgovor i ostaje u IDLE stanju, čime je potvrđena ispravna funkcionalnost modula.
+
+U ovom scenariju verifikovan je rad modula icmp_echo_responder u slučaju kada pristigli Ethernet okvir sadrži pogrešnu odredišnu IPv4 adresu. Nakon analize IP zaglavlja, modul pravilno prepoznaje da paket nije namijenjen ovom uređaju i prelazi u stanje ignorisanja.
+Rezultati ModelSim simulacije potvrđuju da se u ovom slučaju ne generiše ICMP Echo Reply odgovor. Modul se po završetku prijema okvira ispravno vraća u IDLE stanje i spreman je za obradu narednih paketa.
 
 <div align="center">
 <img src="VHDL/results/ip1.png" alt="ICMP format okvira" width="900">
@@ -308,7 +309,9 @@ Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktiva
 </div>
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
-U ovom scenariju ModelSim verifikacije generisan je okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali sa pogrešnim ICMP zaglavljem. Modul icmp_echo_responder takav paket ignoriše, te ne generiše Echo Reply odgovor i ostaje u IDLE stanju.
+
+U ovom verifikacionom scenariju generisan je Ethernet okvir sa ispravnim Ethernet i IPv4 zaglavljem, ali sa neispravnim ICMP zaglavljem. Nakon analize ICMP polja, modul icmp_echo_responder pravilno prepoznaje nevažeći paket i ignoriše ga.
+Rezultati ModelSim simulacije potvrđuju da se u ovom slučaju ne generiše ICMP Echo Reply odgovor, a modul se po završetku prijema okvira ispravno vraća u IDLE stanje.
 
 <div align="center">
 <img src="VHDL/results/icmp1.png" alt="ICMP format okvira" width="900">
