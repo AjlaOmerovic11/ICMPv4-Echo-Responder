@@ -345,6 +345,11 @@ Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktiva
 
 # Zaključak
 
+U okviru ovog projekta realizovan je ICMPv4 Echo Responder modul koji omogućava prijem, analizu i obradu ICMP Echo Request paketa, te generisanje odgovarajućih ICMP Echo Reply poruka. Modul je projektovan kao sekvencijalni sklop zasnovan na konačnom automatu (FSM), uz korištenje ready/valid handshake mehanizma, čime je obezbijeđen pouzdan i deterministički prijenos podataka bez gubitka paketa.
+Funkcionalnost modula verifikovana je kroz detaljne FSM dijagrame, WaveDrom vremenske dijagrame, kao i simulacije u ModelSim okruženju. Rezultati simulacija potvrđuju da modul ispravno prepoznaje Ethernet, IPv4 i ICMP zaglavlja, pravilno filtrira neispravne ili neadresirane pakete, te korektno generiše ICMP Echo Reply isključivo za validne ICMP Echo Request okvire. 
+
+Dobijeni rezultati potvrđuju da realizovani modul u potpunosti ispunjava definisane funkcionalne zahtjeve ICMPv4 Echo Responder-a, te da obezbjeđuje pouzdan i stabilan rad u svim testiranim scenarijima. Implementacija predstavlja osnovu za dalji razvoj i nadogradnju sistema, pri čemu se buduća unapređenja mogu odnositi na podršku za dodatne ICMP tipove poruka, proširenje funkcionalnosti na IPv6 protokol, kao i integraciju modula u složenije mrežne procesore i hardverske mrežne sisteme.
+
 ## Literatura
 [1] "Detection of Covert Channels over ICMP Protocol", Dostupno na: https://hal.science/hal-02381398/file/AICCSA%202017%20sirine%20sayadi.pdf
 
