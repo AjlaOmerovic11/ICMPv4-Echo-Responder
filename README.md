@@ -20,7 +20,7 @@ Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip
 
 
 ## Avalon ST
-Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka sa ready/valid handshake protokolom.
+Avalon-ST (Avalon Streaming) je standardno sučelje za jednosmjerni tok podataka sa ready/valid handshake protokolom [5].
 
 #### Generic parametri
 
@@ -351,6 +351,8 @@ Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktiva
 [2] "The Design and Implementation of an IPv6/IPv4 Network Address and Protocol Translator", Dostupno na: https://www.usenix.org/legacy/publications/library/proceedings/usenix98/full_papers/fiuczynski/fiuczynski.pdf
 
 [3] Volnei A. Pedroni, Circuit Design and Simulation with VHDL (poglavlje 11), The MIT Press, Cambridge, Massachussets, 2nd edition, 2010
+    
+[4] Kaljić E., "Predavanje 2 - "Funkcije paketskog čvorišta", nastavni materijal na predmetu Arhitekture paketskih čvorišta, Univerzitet u Sarajevu,      Elektrotehnički fakultet, 2024/2025.
 
-[4] Intel, F. P. G. A., Avalon® interface specifications., Tech. Rep., MNL-AVABUSREF, 2021.
+[5] Intel, F. P. G. A., Avalon® interface specifications., Tech. Rep., MNL-AVABUSREF, 2021.
 
