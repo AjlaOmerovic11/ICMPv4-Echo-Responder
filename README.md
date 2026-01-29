@@ -236,10 +236,6 @@ Na izlaznom interfejsu, signal out_valid se aktivira tek nakon pripreme ICMP Ech
 
 <div align="center">
 <img src="VHDL/results/h_rep4.png" alt="ICMP format okvira" width="900">
-</div>
-
-<div align="center">
-<img src="VHDL/results/h_rep5.png" alt="ICMP format okvira" width="900">
 <p><strong>Slika 12:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za ready/valid handshake scenario.</p>
 </div>
 
