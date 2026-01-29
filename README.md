@@ -15,6 +15,7 @@ U dijelu podatka mogu biti definisana dodatna polja, poput identifikatora i sekv
 <img src="Docs/image.png" alt="ICMP format okvira" width="500">
 <p><strong>Slika 1:</strong> Prikaz ICMP format okvira.</p>
 </div>
+
 ICMPv4 (Internet Control Message Protocol verzija 4) je verzija ICMP protokola koja se koristi unutar IPv4 mreža. Za razliku od nekih drugih protokola višeg sloja, ICMPv4 ne koristi pseudo-zaglavlje prilikom izračunavanja kontrolne sume. Kontrolna suma se računa samo na osnovu ICMP zaglavlja i podataka.
 Kod ICMPv4 Echo Respondera, najvažnije su informativne poruke Echo Request (tip 8) i Echo Reply (tip 0). Kada uređaj primi Echo Request, generiše Echo Reply i pri tome je potrebno pravilno podesiti kontrolnu sumu. Budući da se pri kreiranju Echo Reply poruke mijenja prvenstveno polje Type (sa 8 na 0), kontrolna suma se može prilagoditi postepeno, što ubrzava proces odgovora i smanjuje potrebu za ponovnim izračunavanjem cijelog paketa [2].
 
@@ -240,7 +241,6 @@ Na izlaznom interfejsu, signal out_valid se aktivira tek nakon pripreme ICMP Ech
 </div>
 
 
-
 ## Drugi scenario verifikacije – pogrešna MAC adresa
 
 U drugom scenariju izvršena je verifikacija rada sklopa u situaciji kada pristigli Ethernet okvir sadrži MAC adresu koja se ne podudara sa adresom definisanom u generičkom parametru modula. Putem ModelSim testbench-a generisana je kompletna sekvenca paketa koja obuhvata Ethernet, IPv4 i ICMP zaglavlje. U simulaciji je namjerno postavljena neispravna odredišna MAC adresa.
@@ -256,20 +256,6 @@ Cilj ovog scenarija bio je potvrditi da modul icmp_echo_responder pravilno ignor
 <p><strong>Slika 13:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese.</p>
 </div>
 
-## Drugi scenario verifikacije – pogrešna MAC adresa (ready/valid handshake)
-
-U ovom scenariju testiran je rad modula icmp_echo_responder u slučaju kada pristigli Ethernet okvir sadrži neispravnu odredišnu MAC adresu, koja se ne podudara sa MAC adresom definisanom generičkim parametrom modula. Cilj scenarija je potvrditi da se paket pravilno ignoriše (ne generiše se ICMP Echo Reply), kao i da modul korektno implementira ready/valid handshake mehanizam u režimu odbacivanja paketa.
-Tokom prijema okvira, ulazni bajtovi se prihvataju isključivo kada su in_valid i in_ready istovremeno aktivni. U periodima kada je in_ready = '0', modul pauzira prijem bez gubitka podataka. Nastavak parsiranja se vrši tek nakon ponovne aktivacije in_ready. Nakon analize Ethernet zaglavlja i detekcije pogrešne MAC adrese, modul prelazi u stanje IGNORE, gdje nastavlja da propušta ostatak ulaznog okvira do in_eop, bez pokretanja generisanja odgovora.
-Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktivan, nezavisno od stanja signala out_ready, čime se potvrđuje da modul ne šalje nikakve podatke za pakete koji mu nisu namijenjeni.
-
-<div align="center">
-<img src="VHDL/results/h_mac1.png" alt="ICMP format okvira" width="900">
-</div>
-
-<div align="center">
-<img src="VHDL/results/h_mac2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne MAC adrese i ready/valid handshake mehanizma.</p>
-</div>
 
 ## Drugi scenario verifikacije – pogrešna IP adresa
 
@@ -282,28 +268,9 @@ Rezultati ModelSim simulacije potvrđuju da se u ovom slučaju ne generiše ICMP
 
 <div align="center">
 <img src="VHDL/results/ip2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 15:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
+<p><strong>Slika 14:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese.</p>
 </div>
 
-## Drugi scenario verifikacije – pogrešna IP adresa (ready/valid handshake)
-
-U ovom scenariju testiran je rad modula icmp_echo_responder u slučaju kada pristigli Ethernet okvir sadrži neispravnu odredišnu IP adresu, koja se ne podudara sa IP adresom definisanom generičkim parametrom modula. Cilj scenarija je potvrditi da se paket pravilno ignoriše (ne generiše se ICMP Echo Reply), kao i da modul korektno implementira ready/valid handshake mehanizam u režimu odbacivanja paketa.
-Tokom prijema okvira, ulazni bajtovi se prihvataju isključivo kada su signali in_valid i in_ready istovremeno aktivni. U periodima kada je in_ready = '0', modul pauzira prijem bez gubitka podataka, a nastavak parsiranja se vrši tek nakon ponovne aktivacije signala in_ready. Time je obezbijeđena ispravna sinhronizacija prijema podataka u skladu sa ready/valid protokolom.
-Nakon analize Ethernet i IPv4 zaglavlja i detekcije pogrešne odredišne IP adrese, modul prelazi u stanje IGNORE, u kojem nastavlja da prihvata ostatak ulaznog okvira do signala in_eop, bez pokretanja procesa generisanja ICMP Echo Reply odgovora.
-Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktivan, nezavisno od stanja signala out_ready, čime se potvrđuje da modul ne generiše izlazne podatke za pakete koji mu nisu namijenjeni.
-
-<div align="center">
-<img src="VHDL/results/h_ip1.png" alt="ICMP format okvira" width="900">
-</div>
-
-<div align="center">
-<img src="VHDL/results/h_ip2.png" alt="ICMP format okvira" width="900">
-</div>
-
-<div align="center">
-<img src="VHDL/results/h_ip3.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 16:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario pogrešne IP adrese i ready/valid handshake mehanizma.</p>
-</div>
 
 ## Drugi scenario verifikacije – neispravno ICMP zaglavlje
 
@@ -316,28 +283,9 @@ Rezultati ModelSim simulacije potvrđuju da se u ovom slučaju ne generiše ICMP
 
 <div align="center">
 <img src="VHDL/results/icmp2.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 17:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
+<p><strong>Slika 15:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja.</p>
 </div>
 
-## Drugi scenario verifikacije – neispravno ICMP zaglavlje (ready/valid handshake)
-
-U ovom scenariju testiran je rad modula icmp_echo_responder u slučaju kada pristigli paket sadrži neispravno ICMP zaglavlje, odnosno ICMP poruku koja nije tipa Echo Request ili ne ispunjava očekivani format. Cilj scenarija je potvrditi da se paket pravilno ignoriše, kao i da modul zadrži korektno ponašanje ready/valid handshake mehanizma tokom odbacivanja paketa.
-Tokom prijema okvira, ulazni bajtovi se prihvataju isključivo u ciklusima kada su signali in_valid i in_ready istovremeno aktivni. U slučaju privremene deaktivacije signala in_ready, prijem podataka se pauzira bez narušavanja integriteta ulaznog toka, a obrada se nastavlja po ponovnoj aktivaciji signala in_ready.
-Nakon obrade Ethernet i IPv4 zaglavlja, te detekcije neispravnog ICMP zaglavlja, modul prelazi u stanje IGNORE, gdje nastavlja prihvat preostalih bajtova ulaznog okvira do signala in_eop, bez generisanja ICMP Echo Reply poruke.
-Na izlaznom interfejsu, tokom cijelog scenarija signal out_valid ostaje neaktivan bez obzira na stanje signala out_ready, čime se potvrđuje da modul ne emituje nikakve izlazne podatke za pakete sa neispravnim ICMP zaglavljem.
-
-<div align="center">
-<img src="VHDL/results/h_icmp1.png" alt="ICMP format okvira" width="900">
-</div>
-
-<div align="center">
-<img src="VHDL/results/h_icmp2.png" alt="ICMP format okvira" width="900">
-</div>
-
-<div align="center">
-<img src="VHDL/results/h_icmp3.png" alt="ICMP format okvira" width="900">
-<p><strong>Slika 18:</strong> Prikaz verifikacije rezultata pomoću ModelSim-a za drugi scenario neispravnog ICMP zaglavlja i ready/valid handshake mehanizma.</p>
-</div>
 
 # Zaključak
 
