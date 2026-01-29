@@ -223,6 +223,8 @@ Pristigli Ethernet okvir sadrži ispravne odredišne MAC i IPv4 adrese definisan
 Poseban fokus ovog scenarija stavljen je na verifikaciju ready/valid handshake kontrole toka podataka. Ulazni bajtovi se prihvataju isključivo u taktovima kada su signali in_valid i in_ready istovremeno aktivni. U periodima kada je in_ready privremeno deaktiviran, modul pauzira prijem podataka, pri čemu se ulazni podaci zadržavaju stabilnim i ne dolazi do gubitka ili narušavanja redoslijeda bajtova.
 Na izlaznom interfejsu, signal out_valid se aktivira tek nakon pripreme ICMP Echo Reply paketa, dok se prenos podataka vrši samo kada je i signal out_ready aktivan. U slučaju privremenog zastoja na izlazu (out_ready = '0'), izlazni podaci ostaju stabilni sve dok se handshake ponovo ne uspostavi, nakon čega se prenos nastavlja bez prekida. Po završetku slanja ICMP Echo Reply paketa, modul se ispravno vraća u početno stanje i spreman je za obradu narednih Ethernet okvira.
 
+U narednim verifikacionim scenarijima, u kojima modul detektuje neispravne pakete i prelazi u IGNORE putanju obrade, ready/valid handshake mehanizam na izlazu se ne testira, budući da u tim slučajevima ne dolazi do generisanja ICMP Echo Reply odgovora (out_valid ostaje neaktivan). Time se jasno razdvaja verifikacija kontrole toka podataka u scenarijima sa odgovorom od scenarija u kojima se paket isključivo odbacuje. Po završetku slanja ICMP Echo Reply paketa, modul se ispravno vraća u početno stanje i spreman je za obradu narednih Ethernet okvira.
+
 <div align="center">
 <img src="VHDL/results/h_rep1.png" alt="ICMP format okvira" width="900">
 </div>
