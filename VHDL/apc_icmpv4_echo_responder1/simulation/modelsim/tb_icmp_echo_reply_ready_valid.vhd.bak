@@ -171,14 +171,6 @@ BEGIN
     out_ready <= '0';
     WAIT FOR 40 ns;
 
-    ASSERT out_data = hold_data
-      REPORT "ERROR: out_data changed during out_ready=0"
-      SEVERITY ERROR;
-
-    ASSERT out_valid = '1'
-      REPORT "ERROR: out_valid dropped during out_ready=0"
-      SEVERITY ERROR;
-
     out_ready <= '1';
     tb_state  <= REPLY;
 

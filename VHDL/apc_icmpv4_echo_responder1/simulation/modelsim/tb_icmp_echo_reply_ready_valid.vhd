@@ -30,15 +30,13 @@ ARCHITECTURE behavior OF tb_icmp_echo_reply_ready_valid_fsm IS
     );
   END COMPONENT;
 
-  
   TYPE tb_state_t IS (
     IDLE,
     ETHERNET,
     IP,
     ICMP,
     PAYLOAD,
-    REPLY,
-    HANDSHAKE_STALL
+    REPLY
   );
 
   SIGNAL tb_state : tb_state_t := IDLE;
@@ -62,7 +60,6 @@ ARCHITECTURE behavior OF tb_icmp_echo_reply_ready_valid_fsm IS
 
 BEGIN
 
-  
   uut : icmp_echo_responder
     PORT MAP (
       clock     => clock,
@@ -79,20 +76,15 @@ BEGIN
       out_ready => out_ready
     );
 
-  
   clock <= NOT clock AFTER clk_period/2;
 
-  
   stim_proc : PROCESS
     TYPE packet_t IS ARRAY (0 TO 49) OF STD_LOGIC_VECTOR(7 DOWNTO 0);
 
     VARIABLE pkt : packet_t := (
-      -- Ethernet
       x"01", x"02", x"03", x"04", x"05", x"06",
       x"0A", x"0B", x"0C", x"0D", x"0E", x"0F",
       x"08", x"00",
-
-      -- IPv4
       x"45", x"01",
       x"12", x"13",
       x"14", x"15",
@@ -102,32 +94,25 @@ BEGIN
       x"19", x"1A",
       x"C0", x"A8", x"01", x"01",
       x"C0", x"A8", x"01", x"64",
-
-      -- ICMP
       x"08",
       x"09",
       x"1B", x"1C",
       x"1D", x"1E",
       x"1F", x"20",
-
-      -- Payload
       x"21", x"22", x"23", x"24",
       x"25", x"26", x"27", x"28"
     );
 
-    VARIABLE i : INTEGER := 0;
     VARIABLE hold_data : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
   BEGIN
 
-    
     reset <= '1';
     tb_state <= IDLE;
     WAIT FOR 40 ns;
     reset <= '0';
     WAIT UNTIL rising_edge(clock);
 
-    
     in_valid <= '1';
 
     FOR i IN 0 TO 49 LOOP
@@ -158,21 +143,15 @@ BEGIN
     in_eop   <= '0';
     tb_state <= REPLY;
 
-    
-    -- READY / VALID HANDSHAKE TEST
- 
-
     WAIT UNTIL out_valid = '1';
     WAIT UNTIL rising_edge(clock);
 
     hold_data := out_data;
 
-    tb_state  <= HANDSHAKE_STALL;
     out_ready <= '0';
     WAIT FOR 40 ns;
 
     out_ready <= '1';
-    tb_state  <= REPLY;
 
     WAIT UNTIL out_eop = '1';
     WAIT UNTIL rising_edge(clock);

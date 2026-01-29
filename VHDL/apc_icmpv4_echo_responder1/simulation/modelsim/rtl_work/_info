@@ -22,9 +22,9 @@ Vm5;<Dnf9RonY92__30`JA1
 !s100 JU7_k2M[RciLRlMCHH]_Q2
 Z7 OV;C;10.5b;63
 31
-Z8 !s110 1768833100
+Z8 !s110 1769702105
 !i10b 1
-Z9 !s108 1768833100.000000
+Z9 !s108 1769702104.000000
 Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/icmp_echo_responder.vhd|
 Z11 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/icmp_echo_responder.vhd|
 !i113 1
@@ -49,25 +49,25 @@ R11
 !i113 1
 R12
 R13
-Etb_icmp_echo_icmp_ignore_ready_valid
-Z14 w1768834798
+Etb_icmp_echo_icmp_ignore
+Z14 w1768830459
 R2
 R3
 R4
 R0
-Z15 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore_ready_valid.vhd
-Z16 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore_ready_valid.vhd
+Z15 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore.vhd
+Z16 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore.vhd
 l0
 L5
-Vi2bM9BN4Za[SJ:HELSk`43
-!s100 RY7lRc0IP>kQ3P9:_6]ze3
+VPoYSh0e5Yb>:@`0XdZ7f_1
+!s100 L:WWbc]WBn0:C_@8Z@fO51
 R7
 32
-Z17 !s110 1768834843
+Z17 !s110 1769702444
 !i10b 1
-Z18 !s108 1768834843.000000
-Z19 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore_ready_valid.vhd|
-Z20 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore_ready_valid.vhd|
+Z18 !s108 1769702443.000000
+Z19 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore.vhd|
+Z20 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_icmp_ignore.vhd|
 !i113 1
 Z21 o-work work
 R13
@@ -75,11 +75,11 @@ Abehavior
 R2
 R3
 R4
-DEx4 work 36 tb_icmp_echo_icmp_ignore_ready_valid 0 22 i2bM9BN4Za[SJ:HELSk`43
-l58
+DEx4 work 24 tb_icmp_echo_icmp_ignore 0 22 PoYSh0e5Yb>:@`0XdZ7f_1
+l67
 L8
-V^CL6RU47fGicjk@=f@34Z1
-!s100 [bzjU4jmZBiazigRRYCK=1
+V9=GjGc238:0C`26Ljb;Og0
+!s100 6n[K?B;G;`j:dhX:c76Bj1
 R7
 32
 R17
@@ -90,25 +90,25 @@ R20
 !i113 1
 R21
 R13
-Etb_icmp_echo_ip_ignore_ready_valid
-Z22 w1768833942
+Etb_icmp_echo_ip_ignore
+Z22 w1768830094
 R2
 R3
 R4
 R0
-Z23 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore_ready_valid.vhd
-Z24 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore_ready_valid.vhd
+Z23 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore.vhd
+Z24 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore.vhd
 l0
 L5
-VF;h>8LX]mbTmhWQQ]YmCM1
-!s100 :=2jQ?Th`]m33j;926lBQ0
+VK@16LOAbSIPb3]k:UKiMN0
+!s100 j1E]6cQe;oM1Pz<acf4HZ0
 R7
 32
-Z25 !s110 1768833957
+!s110 1769702368
 !i10b 1
-Z26 !s108 1768833957.000000
-Z27 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore_ready_valid.vhd|
-Z28 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore_ready_valid.vhd|
+Z25 !s108 1769702368.000000
+Z26 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore.vhd|
+Z27 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_ip_ignore.vhd|
 !i113 1
 R21
 R13
@@ -116,40 +116,40 @@ Abehavior
 R2
 R3
 R4
-DEx4 work 34 tb_icmp_echo_ip_ignore_ready_valid 0 22 F;h>8LX]mbTmhWQQ]YmCM1
-l58
+DEx4 work 22 tb_icmp_echo_ip_ignore 0 22 K@16LOAbSIPb3]k:UKiMN0
+l67
 L8
-V33>Ol0f<aIo;D;e@f189_2
-!s100 mFKFj^agmM[M3fZ`Z7^UD2
+VVo^GYX6AaR7;N^eQXAWF;1
+!s100 9Gm9`T?2jGN?M^25hA5OR2
 R7
 32
-R25
+!s110 1769702369
 !i10b 1
+R25
 R26
 R27
-R28
 !i113 1
 R21
 R13
-Etb_icmp_echo_mac_ignore_ready_valid
-Z29 w1768832997
+Etb_icmp_echo_mac_ignore
+Z28 w1768829730
 R2
 R3
 R4
 R0
-Z30 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore_ready_valid.vhd
-Z31 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore_ready_valid.vhd
+Z29 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore.vhd
+Z30 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore.vhd
 l0
 L5
-Va9:73?`<eI0MG0I4[AcY33
-!s100 [E4mWDmDDX89RhH>Sdm340
+VaI42lm?72=]F:I_^[oN7R0
+!s100 dBiiATc5^LWWNT<V:7jVP1
 R7
 32
-Z32 !s110 1768833117
+Z31 !s110 1769702292
 !i10b 1
-Z33 !s108 1768833117.000000
-Z34 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore_ready_valid.vhd|
-Z35 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore_ready_valid.vhd|
+Z32 !s108 1769702292.000000
+Z33 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore.vhd|
+Z34 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_mac_ignore.vhd|
 !i113 1
 R21
 R13
@@ -157,18 +157,100 @@ Abehavior
 R2
 R3
 R4
-DEx4 work 35 tb_icmp_echo_mac_ignore_ready_valid 0 22 a9:73?`<eI0MG0I4[AcY33
-l50
+DEx4 work 23 tb_icmp_echo_mac_ignore 0 22 aI42lm?72=]F:I_^[oN7R0
+l51
 L8
-V<4IgT<6WD5eg3C<omeACH1
-!s100 Uc0f_Qd:`Bh@O0KgIRT@@1
+VbDi5GGKXDJ^m]6>5d<cbi1
+!s100 J^BAf0I[DFm2eZQN6n=`01
 R7
 32
-R32
+R31
 !i10b 1
+R32
 R33
 R34
-R35
+!i113 1
+R21
+R13
+Etb_icmp_echo_reply
+Z35 w1768829428
+R2
+R3
+R4
+R0
+Z36 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply.vhd
+Z37 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply.vhd
+l0
+L5
+VOTaJ>AU<44P6S]>QgY2Rn3
+!s100 KEo=YHk5VzZz]<Q47kLmD2
+R7
+32
+Z38 !s110 1769702124
+!i10b 1
+Z39 !s108 1769702124.000000
+Z40 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply.vhd|
+Z41 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply.vhd|
+!i113 1
+R21
+R13
+Abehavior
+R2
+R3
+R4
+DEx4 work 18 tb_icmp_echo_reply 0 22 OTaJ>AU<44P6S]>QgY2Rn3
+l64
+L8
+VRnPc=X8OHPdOO8HIGcnE80
+!s100 n>nT6hKK<@Ik3N=9mR`MC3
+R7
+32
+R38
+!i10b 1
+R39
+R40
+R41
+!i113 1
+R21
+R13
+Etb_icmp_echo_reply_ready_valid_fsm
+Z42 w1769698142
+R2
+R3
+R4
+R0
+Z43 8C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply_ready_valid.vhd
+Z44 FC:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply_ready_valid.vhd
+l0
+L5
+V1KX<dU3o25^c;O:CE_==<0
+!s100 ZDFXRPRD1B4bI:iLYH5BQ0
+R7
+32
+Z45 !s110 1769702522
+!i10b 1
+Z46 !s108 1769702521.000000
+Z47 !s90 -reportprogress|300|-work|work|C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply_ready_valid.vhd|
+Z48 !s107 C:/Users/Dino/Downloads/intelFPGA_lite/19.1/apc_icmpv4_echo_responder1/simulation/modelsim/tb_icmp_echo_reply_ready_valid.vhd|
+!i113 1
+R21
+R13
+Abehavior
+R2
+R3
+R4
+DEx4 work 34 tb_icmp_echo_reply_ready_valid_fsm 0 22 1KX<dU3o25^c;O:CE_==<0
+l61
+L8
+V1UFXM>S@ck_B]z[Lm9bI42
+!s100 ^@MJMVkJMT`5:cORRNGT=0
+R7
+32
+R45
+!i10b 1
+R46
+R47
+R48
 !i113 1
 R21
 R13
